@@ -1,51 +1,49 @@
-**Migration Factory: DRS-based, Wave Model (~2000 DBs)**
+# Migration Factory
 
-Purpose: Define an industrialized approach to migrate ~2000 databases to HCS RDS using Huawei DRS (Data Replication Service). The factory provides standardized templates, validations, runbooks and evidence packs.
+## Table of Contents
+- [Overview](#overview)
+- [Real-World Business Value](#real-world-business-value)
+- [Project Folder Structure](#project-folder-structure)
+- [Tasks and Implementation Steps](#tasks-and-implementation-steps)
+- [Core Implementation Breakdown](#core-implementation-breakdown)
+- [IAM Role and Permissions](#iam-role-and-permissions)
+- [Project Features (Detailed Breakdown)](#project-features-detailed-breakdown)
+- [Design Decisions and Highlights](#design-decisions-and-highlights)
+- [Errors Encountered and Resolved (optional)](#errors-encountered-and-resolved-optional)
+- [Conclusion](#conclusion)
 
-1) Standard migration lifecycle
+## Overview
+The migration factory defines a repeatable DRS/DSM-aligned approach for high-volume database migration waves with governance and operational controls.
 
-- Pre-checks (automated):
-  - Network reachability (source → target), DNS resolution, NTP sync, required privileges, storage sizing, schema compatibility checks.
-  - Security groups & routing: open only required internal ports; no public exposure.
+## Real-World Business Value
+Wave-based migration planning improves delivery predictability, reduces outage risk, and supports business-window alignment for critical services.
 
-- Full load: Using DRS full copy of data to the HCS target; monitor throughput and error rates.
+## Project Folder Structure
+- DRS module: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules/drs
+- DRS stacks: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/live/tenants/tenant-absa-bank/dev/vdcs/vdc-data/drs-primary
+- Runbook: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/blob/main/runbooks/drs-wave-runbook.md
 
-- CDC enablement & monitoring: Enable CDC on source, track apply lag and queued transactions.
+## Tasks and Implementation Steps
+1. Defined migration lifecycle phases.
+2. Aligned implementation with validation and evidence requirements.
+3. Built demo-control workflow for DRS baseline resources.
 
-- Validation gate:
-  - Row counts, checksums (table-level), schema/tables presence validation.
-  - App-level smoke tests: connectivity, sanity queries.
+## Core Implementation Breakdown
+The model includes pre-checks, controlled replication cutover gates, post-cutover verification, and evidence collection integrated with CI/CD automation.
 
-- Cutover steps (in approved window):
-  - Final sync & drain writes at source, switch DNS to new endpoint (DNS TTL planning), enable write on target.
-  - Maintain rollback window and steps.
+## IAM Role and Permissions
+Execution relies on scoped operational and pipeline identities with explicit separation between deployment capability and review capability.
 
-- Post-cutover hypercare: enhanced monitoring, retention of evidence pack, rollback readiness.
+## Project Features (Detailed Breakdown)
+- Wave-based migration model.
+- Audit-oriented evidence outputs.
+- Controlled progression gates.
 
-2) Wave planning & governance
+## Design Decisions and Highlights
+The design favours industrialised migration repeatability over ad-hoc one-off cutovers.
 
-- Wave 0: Pilot (5–10 low-risk DBs) to validate tooling, evidence pack, and runbooks.
-- Wave sizing: batch by bandwidth, DRS concurrency limits, validation capacity, and business change windows (prefer smaller batches during business-critical windows).
-- Migration inventory: central CSV/YAML with metadata (db_id, engine, size, owner, business_window, prechecks, status, evidence location).
-- Evidence packs: per-migration artifact containing prechecks, plan, DRS logs, validation results, cutover notes, and state pointers.
+## Errors Encountered and Resolved (optional)
+Demo pipeline and stack-context constraints were corrected to preserve reliable execution semantics.
 
-3) Templates & evidence
-
-- Standard templates per engine (Postgres/MySQL): precheck script, validation script, smoke tests, rollback checklist.
-- Evidence pack contents:
-  - Precheck outputs
-  - Full-load & CDC logs
-  - Validation results & checksums
-  - Plan & apply artifacts
-  - Cutover approval and timestamped actions
-
-4) Runbooks (operations)
-
-- DRS wave execution:
-  - Scheduling, concurrency control, central tracker, communications playbook.
-
-- Cutover & rollback:
-  - Automated steps for final sync, DNS swap, health checks, and rollback triggers.
-
-- Restore tests for RDS:
-  - Periodic restore validation runbook and automated smoke tests.
+## Conclusion
+The migration factory provides a practical pattern for scaling database migration delivery while maintaining governance and operational confidence.

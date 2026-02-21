@@ -1,42 +1,50 @@
-# OBS Bucket & IAM Checklist (WORM for Terraform state)
+# OBS IAM and Bucket Controls
 
-Purpose: checklist and example IAM policy for creating an OBS bucket used for Terraform remote state with Object Lock (WORM) semantics.
+## Table of Contents
+- [Overview](#overview)
+- [Real-World Business Value](#real-world-business-value)
+- [Project Folder Structure](#project-folder-structure)
+- [Tasks and Implementation Steps](#tasks-and-implementation-steps)
+- [Core Implementation Breakdown](#core-implementation-breakdown)
+- [IAM Role and Permissions](#iam-role-and-permissions)
+- [Project Features (Detailed Breakdown)](#project-features-detailed-breakdown)
+- [Design Decisions and Highlights](#design-decisions-and-highlights)
+- [Errors Encountered and Resolved (optional)](#errors-encountered-and-resolved-optional)
+- [Conclusion](#conclusion)
 
-Bucket creation checklist
-- Create bucket: `absa-terraform-state-jnb` in region `jnb`.
-- Enable Object Lock (WORM) at bucket-level if supported. If bucket-level Object Lock cannot be set, plan for object-level retention on created keys.
-- Define lifecycle/retention rules according to compliance (e.g., retain state versions for N years).
-- Create prefixes per tenant/env/vdc/stack: `tenant-absa-bank/prod/vdc-data/rds-primary/`.
-- Enable server-side encryption for the bucket.
-- Enable access logging to a separate secure bucket for audit trail.
+## Overview
+This document captures OBS bucket and IAM guidance for secure Terraform state and evidence artefact storage.
 
-Access model and accounts
-- Pipeline service account (AK/SK): scope to `absa-terraform-state-jnb/<tenant>/*` with PUT/GET/LIST permissions.
-- Engineers role: GET/LIST on same prefixes (read-only).
-- Admin break-glass: separate credentials with MFA and JIT activation; all actions logged.
+## Real-World Business Value
+A secure state backend model lowers operational risk, supports compliance, and improves incident recoverability.
 
-Example OBS IAM-like policy (conceptual JSON)
-{
-  "Version": "2023-01-01",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": { "AWS": "arn:aws:iam::PIPELINE_ACCOUNT" },
-      "Action": ["s3:PutObject", "s3:PutObjectAcl", "s3:ListBucket", "s3:GetObject"],
-      "Resource": [
-        "arn:aws:s3:::absa-terraform-state-jnb/tenant-absa-bank/*",
-        "arn:aws:s3:::absa-terraform-state-jnb"
-      ]
-    },
-    {
-      "Effect": "Allow",
-      "Principal": { "AWS": "arn:aws:iam::ENGINEER_ROLE" },
-      "Action": ["s3:GetObject", "s3:ListBucket"],
-      "Resource": ["arn:aws:s3:::absa-terraform-state-jnb/tenant-absa-bank/*"]
-    }
-  ]
-}
+## Project Folder Structure
+- Backend include: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/blob/main/live/terragrunt.backend.hcl
+- Backend notes: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/blob/main/documentation/state-backend.md
 
-Notes:
-- Replace ARN formats above with the OBS/Huawei equivalent when creating policies. The JSON shows the intent: pipeline principal = write, engineers = read-only.
-- Confirm OBS provides object-lock (WORM) before enabling; document retention windows.
+## Tasks and Implementation Steps
+1. Defined bucket and retention requirements.
+2. Specified role separation for write and read-only access.
+3. Aligned controls with pipeline-based state operations.
+
+## Core Implementation Breakdown
+State and evidence are stored in OBS with encryption and controlled access paths. Operational guidance supports immutable retention posture where available.
+
+## IAM Role and Permissions
+- Pipeline role: scoped write/list/read for required prefixes.
+- Engineer role: list/read for diagnostics and review.
+- Administrative role: audited emergency-only escalation.
+
+## Project Features (Detailed Breakdown)
+- Prefix-scoped access model.
+- Encryption baseline.
+- Audit-oriented storage patterns.
+
+## Design Decisions and Highlights
+The model separates duties to preserve least privilege while enabling CI/CD execution and operational troubleshooting.
+
+## Errors Encountered and Resolved (optional)
+No critical backend IAM design defects were identified after standardisation.
+
+## Conclusion
+The OBS IAM model establishes a secure storage foundation for state and evidentiary artefacts in automated cloud delivery.

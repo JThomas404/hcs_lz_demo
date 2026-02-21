@@ -1,7 +1,65 @@
-# Modules directory
+# Terraform Modules
 
-Each module is versioned and stored in this `modules/` directory. Individual modules contain skeleton `main.tf`, `variables.tf`, `outputs.tf`, `versions.tf`, and a `README.md`. Pin module versions when consumed by `live/`.
+## Table of Contents
+- [Overview](#overview)
+- [Real-World Business Value](#real-world-business-value)
+- [Project Folder Structure](#project-folder-structure)
+- [Tasks and Implementation Steps](#tasks-and-implementation-steps)
+- [Core Implementation Breakdown](#core-implementation-breakdown)
+- [IAM Role and Permissions](#iam-role-and-permissions)
+- [Project Features (Detailed Breakdown)](#project-features-detailed-breakdown)
+- [Design Decisions and Highlights](#design-decisions-and-highlights)
+- [Errors Encountered and Resolved (optional)](#errors-encountered-and-resolved-optional)
+- [Skills Demonstrated](#skills-demonstrated)
+- [Conclusion](#conclusion)
 
-Notes:
-- The `internet-egress` module has been retired for this private-cloud baseline.
-- Default pattern is no-public-egress; enforce exceptions through policy and approved change control.
+## Overview
+This directory contains reusable Terraform modules that implement core HCS building blocks and demo capabilities. Modules are consumed by Terragrunt stacks under live/.
+
+## Real-World Business Value
+Reusable modules reduce implementation variance, increase review quality, and accelerate onboarding.
+
+## Project Folder Structure
+- Modules root: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules
+- Network base: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules/network-base
+- RDS: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules/rds
+- KMS: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules/kms
+- OBS bucket: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules/obs-bucket
+- DRS demo: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules/drs
+
+## Tasks and Implementation Steps
+1. Defined module boundaries and input/output contracts.
+2. Standardised provider/version constraints.
+3. Added safe defaults to avoid accidental provisioning in demo paths.
+4. Introduced DRS demo module for migration-control proof-of-concept.
+
+## Core Implementation Breakdown
+- network-base: VPC and subnet baseline patterns.
+- rds: database instance resource model and outputs.
+- kms: key management primitives for encryption use cases.
+- obs-bucket: bucket and encryption integration support.
+- drs: demo control-plane composition using KMS and OBS modules.
+
+## IAM Role and Permissions
+Modules are designed to run under scoped deployment identities. Runtime credentials are provided by pipeline-secured variable groups.
+
+## Project Features (Detailed Breakdown)
+- Composable module architecture.
+- Shared version pinning.
+- Input validation and safer defaults for demo execution.
+- Output contracts that support stack-to-stack integration.
+
+## Design Decisions and Highlights
+- Kept modules narrowly focused to maintain low coupling.
+- Favoured explicit outputs for observability and downstream use.
+
+## Errors Encountered and Resolved (optional)
+- Addressed incompatible stack inputs by aligning module contracts and stack wiring.
+
+## Skills Demonstrated
+- Terraform module engineering.
+- Reuse-oriented design.
+- Contract-first interface thinking.
+
+## Conclusion
+The module layer establishes a maintainable foundation for HCS platform delivery and demonstrates disciplined IaC engineering practices.

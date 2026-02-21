@@ -1,16 +1,58 @@
-# Pipelines
+# Azure DevOps Pipelines
 
-This folder contains pipeline YAML for two core patterns:
-- `azure-pipelines-per-stack.yml` — per-stack pipeline (recommended)
-- `azure-pipelines-run-all.yml` — aggregated run-all pattern for bootstrapping/coordinated changes
+## Table of Contents
+- [Overview](#overview)
+- [Real-World Business Value](#real-world-business-value)
+- [Project Folder Structure](#project-folder-structure)
+- [Tasks and Implementation Steps](#tasks-and-implementation-steps)
+- [Core Implementation Breakdown](#core-implementation-breakdown)
+- [IAM Role and Permissions](#iam-role-and-permissions)
+- [Project Features (Detailed Breakdown)](#project-features-detailed-breakdown)
+- [Design Decisions and Highlights](#design-decisions-and-highlights)
+- [Errors Encountered and Resolved (optional)](#errors-encountered-and-resolved-optional)
+- [Skills Demonstrated](#skills-demonstrated)
+- [Conclusion](#conclusion)
 
-Templates are used for reusable stages: validate, plan, apply, evidence.
+## Overview
+This directory contains Azure DevOps pipeline entry points for per-stack deployment, run-all orchestration, stack-wrapper templates, and DRS demo execution.
 
-Per-stack wrapper
-- `azure-pipelines-stack-wrapper.yml` — copy this file and adjust `trigger.paths` and the default `stack_path` parameter per stack. It calls the shared stage templates and uses the `hcs-credentials` variable group.
+## Real-World Business Value
+The pipeline model standardises delivery quality by enforcing validation, policy checks, plan artefacts, and controlled apply steps.
 
-Creating a pipeline for a stack (example)
-1. In Azure DevOps, create a new pipeline and point it to your repo.
-2. Select `Existing Azure Pipelines YAML file` and provide the path to your copied wrapper (for example `pipelines/azure-pipelines-stack-wrapper.yml`).
-3. Configure an Azure DevOps Variable Group named `hcs-credentials` with `TF_VAR_hcs_access_key` and `TF_VAR_hcs_secret_key` (marked secret).
-4. Create Environments (e.g., `dev`, `non-prod`, `prod`) and add approvers for non-prod/prod. Set environment concurrency to 1 for exclusive apply.
+## Project Folder Structure
+- Per-stack pipeline: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/blob/main/pipelines/azure-pipelines-per-stack.yml
+- Run-all pipeline: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/blob/main/pipelines/azure-pipelines-run-all.yml
+- Stack wrapper pipeline: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/blob/main/pipelines/azure-pipelines-stack-wrapper.yml
+- DRS demo pipeline: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/blob/main/pipelines/azure-pipelines-drs-demo.yml
+- Shared templates: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/templates
+
+## Tasks and Implementation Steps
+1. Defined reusable stage templates for validate, plan, apply, and evidence.
+2. Implemented fail-closed behaviour in critical stages.
+3. Added checksum verification for tool download integrity.
+4. Added demo-safe trigger controls to prevent noisy non-demo executions.
+
+## Core Implementation Breakdown
+Validate stage enforces formatting, Terragrunt validation, and OPA policy checks. Plan stage generates reusable artefacts. Apply stage executes gated deployment with stack-specific context. Evidence stage publishes traceability artefacts.
+
+## IAM Role and Permissions
+Pipeline credentials are injected via secure variable groups (hcs-credentials) and should be scoped with least privilege for state and target resources.
+
+## Project Features (Detailed Breakdown)
+- Template-driven multi-pipeline consistency.
+- Environment-gated apply patterns.
+- Security-aware credential handling.
+- Demo-targeted DRS pipeline path.
+
+## Design Decisions and Highlights
+Selected Azure DevOps templates to preserve DRY principles and simplify policy-aligned scaling.
+
+## Errors Encountered and Resolved (optional)
+Corrected apply stage path context and artefact handling for Terragrunt stack applies.
+
+## Skills Demonstrated
+- Azure DevOps YAML engineering.
+- CI/CD hardening and supply-chain checks.
+
+## Conclusion
+The pipeline implementation demonstrates practical production-minded CI/CD discipline with clear pathways for both demonstration and operational scale.

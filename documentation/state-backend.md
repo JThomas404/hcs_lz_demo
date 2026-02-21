@@ -1,38 +1,48 @@
-**State & Backend Implementation Notes**
+# State Backend Implementation
 
-- Use an OBS bucket with object lock (WORM) to enforce append-only state history. Configure prefixes per tenant/env/vdc/stack.
-- Terragrunt key convention:
+## Table of Contents
+- [Overview](#overview)
+- [Real-World Business Value](#real-world-business-value)
+- [Project Folder Structure](#project-folder-structure)
+- [Tasks and Implementation Steps](#tasks-and-implementation-steps)
+- [Core Implementation Breakdown](#core-implementation-breakdown)
+- [IAM Role and Permissions](#iam-role-and-permissions)
+- [Project Features (Detailed Breakdown)](#project-features-detailed-breakdown)
+- [Design Decisions and Highlights](#design-decisions-and-highlights)
+- [Errors Encountered and Resolved (optional)](#errors-encountered-and-resolved-optional)
+- [Conclusion](#conclusion)
 
-  <tenant>/<env>/<vdc>/<stack_path>/terraform.tfstate
+## Overview
+This document defines backend state implementation for Terragrunt/Terraform operations against OBS-compatible storage.
 
-- Terragrunt example (include shared backend then compute key per-stack):
+## Real-World Business Value
+Reliable state handling is foundational to safe automation, reproducible plans, and rollback-capable operations.
 
-  include "../../terragrunt.backend.hcl"
+## Project Folder Structure
+- Backend include: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/blob/main/live/terragrunt.backend.hcl
+- Example stack: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/live/tenants/tenant-absa-bank/dev
 
-  locals {
-    tenant = "tenant-absa-bank"
-    env    = "prod"
-    vdc    = "vdc-data"
-    stack  = "rds-primary"
-    state_key = "${local.tenant}/${local.env}/${local.vdc}/${local.stack}/terraform.tfstate"
-  }
+## Tasks and Implementation Steps
+1. Implemented central backend include.
+2. Applied stack-relative key derivation.
+3. Removed duplicated stack backend definitions.
 
-  remote_state {
-    backend = "s3"
-    config = {
-      bucket = "absa-terraform-state-jnb"
-      key    = local.state_key
-      region = "jnb"
-      encrypt = true
-    }
-  }
+## Core Implementation Breakdown
+State keys are generated centrally to reduce drift and standardise path naming. Encryption is enabled in backend configuration.
 
-- WORM semantics: Configure OBS object lock to append-only and immutable retention. Terraform writes new state versions (PUT). WORM prevents deletion or modification of previous versions, while allowing new versions to be added.
+## IAM Role and Permissions
+Backend access should follow least privilege with pipeline write access and engineer read/list access.
 
-Recommended access controls:
-- Create a pipeline service account (AK/SK) scoped to the OBS prefixes used by Terraform. Grant PUT/GET/LIST to those prefixes.
-- Create an engineers read-only role that has GET/LIST only.
-- Keep an admin break-glass credential in an audited vault and require just-in-time elevation.
+## Project Features (Detailed Breakdown)
+- Deterministic key mapping.
+- DRY backend configuration.
+- Scalable multi-stack support.
 
-Notes on Terraform and WORM:
-- Terraform writes state by PUTting object versions. WORM prevents deletion or modification of previous versions, while allowing new versions to be added. Keep lifecycle and retention policy aligned with compliance.
+## Design Decisions and Highlights
+Centralised backend logic was chosen to avoid repetitive stack-level configuration and reduce long-term maintenance overhead.
+
+## Errors Encountered and Resolved (optional)
+Path-depth corrections were applied after folder structure updates to preserve include/source integrity.
+
+## Conclusion
+The backend design provides stable, auditable state handling suitable for production-oriented IaC operations.

@@ -1,61 +1,50 @@
-**Repository Structure and PowerShell Generator**
+# Repository Structure and Generator
 
-This document describes the repo layout and how to generate it with the included PowerShell script `create_repo_skeleton.ps1`.
+## Table of Contents
+- [Overview](#overview)
+- [Real-World Business Value](#real-world-business-value)
+- [Project Folder Structure](#project-folder-structure)
+- [Tasks and Implementation Steps](#tasks-and-implementation-steps)
+- [Core Implementation Breakdown](#core-implementation-breakdown)
+- [IAM Role and Permissions](#iam-role-and-permissions)
+- [Project Features (Detailed Breakdown)](#project-features-detailed-breakdown)
+- [Design Decisions and Highlights](#design-decisions-and-highlights)
+- [Errors Encountered and Resolved (optional)](#errors-encountered-and-resolved-optional)
+- [Conclusion](#conclusion)
 
-Top-level layout (skeleton):
+## Overview
+This document explains repository layout and the bootstrap script that creates a baseline project skeleton for consistent onboarding.
 
-- modules/
-  - network-base/
-    - main.tf, variables.tf, outputs.tf, versions.tf, README.md
-  - ecs/  (and others)
-- landing-zone/
-  - landing-zone-foundation/
-  - guardrails/
-  - logging-audit/
-  - shared-obs/
-- resource-space/
-  - network-base/
-  - connectivity/
-  - guardrails/
-- workloads/
-  - ecs/
-  - elb/
-  - rds/
-  - drs/
-  - kms/
-  - obs-buckets/
-- data-sources/
-- live/
-  - terragrunt.hcl
-  - tenants/tenant-absa-bank/
-    - dev/stacks
-    - non-prod/
-    - prod/
-- pipelines/
-  - azure-pipelines-per-stack.yml
-  - azure-pipelines-run-all.yml
-- templates/
-  - stage-validate.yml
-  - stage-plan.yml
-  - stage-apply.yml
-  - stage-evidence.yml
-- policy/opa/
-  - required-tags.rego
-  - deny-public-ingress.rego
-- documentation/
-  - architecture-operating-model.md
-  - migration-factory.md
-  - drs-runbooks.md
-  - state-backend.md
-- runbooks/
-  - drs-wave-runbook.md
-  - rds-restore-test.md
+## Real-World Business Value
+A predictable repository shape reduces onboarding time, enables standard review patterns, and improves automation reliability.
 
-Script: `create_repo_skeleton.ps1`
-- Safe to re-run; will not overwrite existing files unless `-Force` is specified.
-- Will create directories and skeleton files with a single newline or minimal content (no empty-string files).
-- Prints status messages for each created file.
+## Project Folder Structure
+- Generator script: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/blob/main/scripts/create_repo_skeleton.ps1
+- Documentation root: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/documentation
+- Live stacks: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/live
+- Modules: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules
 
-Usage (PowerShell):
+## Tasks and Implementation Steps
+1. Defined target folder hierarchy for platform, policy, and delivery concerns.
+2. Implemented safe rerun behaviour in bootstrap script.
+3. Updated script outputs to align with documentation/ path.
 
-  .\create_repo_skeleton.ps1 -RootPath 'C:\Users\Jarred Thomas\\.vscode\\hcs_lz_demo' [-Force]
+## Core Implementation Breakdown
+The repository is segmented by function: module code, environment stacks, pipeline automation, policy controls, and technical documentation.
+
+## IAM Role and Permissions
+Repository structure supports role separation by isolating deployable stack paths from policy and automation templates.
+
+## Project Features (Detailed Breakdown)
+- Deterministic folder conventions.
+- Scripted bootstrap and regeneration support.
+- Clear mapping between architecture and source layout.
+
+## Design Decisions and Highlights
+The structure favours maintainability and auditability over compactness, which improves long-term ownership and governance.
+
+## Errors Encountered and Resolved (optional)
+Updated path references after docs-to-documentation naming consolidation.
+
+## Conclusion
+The repository model supports reproducible engineering workflows and coherent technical communication across teams.

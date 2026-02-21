@@ -1,31 +1,50 @@
-# Azure DevOps Integration: Secrets, Environments, and Locking
+# Azure DevOps Integration
 
-This document explains how to securely pass AK/SK to pipelines, configure environment approvals, and implement pipeline-level locking.
+## Table of Contents
+- [Overview](#overview)
+- [Real-World Business Value](#real-world-business-value)
+- [Project Folder Structure](#project-folder-structure)
+- [Tasks and Implementation Steps](#tasks-and-implementation-steps)
+- [Core Implementation Breakdown](#core-implementation-breakdown)
+- [IAM Role and Permissions](#iam-role-and-permissions)
+- [Project Features (Detailed Breakdown)](#project-features-detailed-breakdown)
+- [Design Decisions and Highlights](#design-decisions-and-highlights)
+- [Errors Encountered and Resolved (optional)](#errors-encountered-and-resolved-optional)
+- [Conclusion](#conclusion)
 
-1) Secrets & variable groups
-- Create a secure Variable Group in Azure DevOps named `hcs-credentials`.
-- Add variables (secret) `TF_VAR_hcs_access_key` and `TF_VAR_hcs_secret_key` and enable "Keep this value secret".
-- In pipeline YAML, reference the group under `variables:` or via library. Do not echo these variables in logs.
+## Overview
+This document defines Azure DevOps pipeline integration for secure HCS deployment workflows, including variable management, environment gating, and artefact traceability.
 
-Example YAML snippet to include variable group:
+## Real-World Business Value
+The integration model improves deployment consistency, lowers manual error rates, and provides clear governance checkpoints before infrastructure changes reach target environments.
 
-variables:
-  - group: hcs-credentials
+## Project Folder Structure
+- Pipeline definitions: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/pipelines
+- Pipeline templates: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/templates
 
-2) Service connections
-- Where supported, create an Azure DevOps Service Connection for HCS or use a self-hosted agent that has AK/SK injected from a secure vault.
+## Tasks and Implementation Steps
+1. Configured secure variable group usage for credentials.
+2. Implemented validate/plan/apply/evidence stage templates.
+3. Added environment-gated deployment behaviour.
+4. Introduced checksum verification for tool binary downloads.
 
-3) Environment approvals & locking
-- Create Azure DevOps Environments (`env-dev`, `env-non-prod`, `env-prod`) and configure approvals (pre-deployment) for non-prod/prod.
-- To prevent concurrent applies against the same stack, use one of:
-  - Environment deployment concurrency: set environment to allow only 1 deployment at a time; or
-  - A pipeline-level semaphore: use a named lock file in OBS (created by pipeline) or use Azure Blob lease pattern to acquire exclusive lock before apply.
+## Core Implementation Breakdown
+Pipelines execute Terragrunt stack validation, produce reusable plan artefacts, apply through controlled deployment stages, and publish evidence for audit review.
 
-4) Evidence pack & artifact retention
-- After `apply`, pipeline should collect:
-  - `tfplan.json`, `tfplan` binary, apply logs, terragrunt logs, and metadata (run-id, approver, timestamp).
-- Publish these as pipeline artifacts and upload a copy to OBS under `evidence/<tenant>/<env>/<vdc>/<stack>/<run-id>/` for long-term retention.
+## IAM Role and Permissions
+Deployment identities are scoped to required state and target resources. Credentials are provided through secure Azure DevOps variable groups and should not be hardcoded.
 
-5) Runtime execution model
-- Use ephemeral agents (hosted or container-based) started by pipeline; do not store long-lived credentials on the agent.
-- Pipeline injects `TF_VAR_hcs_access_key` and `TF_VAR_hcs_secret_key`. Terragrunt/Terraform reads them as environment variables.
+## Project Features (Detailed Breakdown)
+- Stage template reuse.
+- Fail-closed validation logic.
+- Controlled apply context per stack path.
+- Evidence publication for traceability.
+
+## Design Decisions and Highlights
+Template standardisation was selected to reduce duplication and preserve consistent controls across stack pipelines.
+
+## Errors Encountered and Resolved (optional)
+Pipeline context issues were resolved by ensuring apply stages receive explicit stack paths and correct artefact locations.
+
+## Conclusion
+The Azure DevOps integration establishes a secure and reproducible delivery baseline aligned with cloud platform governance requirements.
