@@ -1,0 +1,16 @@
+jobs:
+  - job: collect_evidence
+    displayName: "Collect evidence pack"
+    pool:
+      vmImage: "ubuntu-latest"
+    steps:
+      - script: |
+          set -euo pipefail
+          echo "Create evidence artifacts (plan, state snapshot, logs)"
+          mkdir -p "$(Build.SourcesDirectory)/evidence"
+          echo "run_id=$(Build.BuildId)" > "$(Build.SourcesDirectory)/evidence/metadata.txt"
+        displayName: "Gather evidence"
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: "$(Build.SourcesDirectory)/evidence"
+          artifact: "evidence-pack"

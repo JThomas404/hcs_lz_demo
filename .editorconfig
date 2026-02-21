@@ -1,0 +1,9 @@
+root = true
+
+[*.{tf,tfvars,tfstate,tfstate.backup}]
+indent_style = space
+indent_size = 2
+
+[*.ps1]
+indent_style = space
+indent_size = 2

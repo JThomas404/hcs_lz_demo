@@ -1,0 +1,54 @@
+parameters:
+  - name: path
+    type: string
+    default: "./"
+
+jobs:
+  - job: terraform_plan
+    displayName: "Terragrunt plan"
+    pool:
+      vmImage: "ubuntu-latest"
+    steps:
+      - checkout: self
+
+      - script: |
+          echo "Install Terraform and Terragrunt (example, pin versions in prod)"
+          sudo apt-get update -y
+          sudo apt-get install -y unzip curl coreutils
+          TF_VERSION="1.5.8"
+          TG_VERSION="0.55.12"
+          curl -fsSL "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip" -o /tmp/terraform.zip
+          curl -fsSL "https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_SHA256SUMS" -o /tmp/terraform_SHA256SUMS
+          grep " terraform_${TF_VERSION}_linux_amd64.zip$" /tmp/terraform_SHA256SUMS > /tmp/terraform_SHA256SUMS_check
+          (cd /tmp && sha256sum -c terraform_SHA256SUMS_check)
+          sudo unzip -o /tmp/terraform.zip -d /usr/local/bin
+          curl -fsSL "https://github.com/gruntwork-io/terragrunt/releases/download/v${TG_VERSION}/terragrunt_linux_amd64" -o /tmp/terragrunt_linux_amd64
+          curl -fsSL "https://github.com/gruntwork-io/terragrunt/releases/download/v${TG_VERSION}/terragrunt_linux_amd64.sha256" -o /tmp/terragrunt_linux_amd64.sha256
+          echo "$(cat /tmp/terragrunt_linux_amd64.sha256)  /tmp/terragrunt_linux_amd64" > /tmp/terragrunt_sha_check
+          sha256sum -c /tmp/terragrunt_sha_check
+          sudo mv /tmp/terragrunt_linux_amd64 /usr/local/bin/terragrunt
+          sudo chmod +x /usr/local/bin/terragrunt
+          terraform -version
+          terragrunt -version
+        displayName: "Install terraform & terragrunt"
+
+      - script: |
+          echo "Setting HCS credentials from pipeline variables"
+          export TF_VAR_hcs_access_key="$(TF_VAR_hcs_access_key)"
+          export TF_VAR_hcs_secret_key="$(TF_VAR_hcs_secret_key)"
+          cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
+          echo "Initializing terragrunt"
+          terragrunt init -input=false
+          terragrunt plan -out=tfplan -input=false
+          terragrunt show -json tfplan > tfplan.json
+        displayName: "terragrunt init & plan"
+
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: "$(Build.SourcesDirectory)/${{ parameters.path }}/tfplan"
+          artifact: "tfplan"
+
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: "$(Build.SourcesDirectory)/${{ parameters.path }}/tfplan.json"
+          artifact: "tfplan-json"

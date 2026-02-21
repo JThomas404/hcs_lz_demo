@@ -1,0 +1,63 @@
+parameters:
+  - name: path
+    type: string
+    default: "./"
+
+jobs:
+  - job: fmt_validate
+    displayName: "Terraform fmt, terragrunt validate, policy-as-code checks"
+    pool:
+      vmImage: "ubuntu-latest"
+    steps:
+      - script: |
+          set -euo pipefail
+          echo "== Terraform / Terragrunt validate stage =="
+          terraform --version
+        displayName: "Check terraform version"
+
+      - script: |
+          set -euo pipefail
+          echo "Running terraform fmt check"
+          cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
+          terraform fmt -check -recursive
+        displayName: "terraform fmt (check)"
+
+      - script: |
+          set -euo pipefail
+          echo "Running terragrunt validate (if terragrunt present)"
+          cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
+          if command -v terragrunt >/dev/null 2>&1; then
+            terragrunt validate
+          else
+            echo 'terragrunt not installed; skipping terragrunt validate'
+          fi
+        displayName: "terragrunt validate (optional)"
+
+      - script: |
+          set -euo pipefail
+          echo "Installing Conftest (OPA)"
+          curl -sL https://github.com/open-policy-agent/conftest/releases/latest/download/conftest_linux_amd64.tar.gz | tar xz -C /tmp
+          sudo mv /tmp/conftest /usr/local/bin/conftest
+          conftest --version
+        displayName: "Install Conftest"
+
+      - script: |
+          set -euo pipefail
+          echo "Creating Terraform plan for policy checks"
+          cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
+          terraform init -input=false
+          terraform plan -out=tfplan -input=false
+          terraform show -json tfplan > plan.json
+        displayName: "terraform plan -> plan.json"
+
+      - script: |
+          set -euo pipefail
+          echo "Running Conftest / OPA policies against plan.json"
+          cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
+          if [ -f plan.json ]; then
+            conftest test plan.json --policy "$(Build.SourcesDirectory)/policy/opa"
+          else
+            echo 'plan.json not found; failing policy tests'
+            exit 1
+          fi
+        displayName: "Conftest policy-as-code checks"
