@@ -1,17 +1,17 @@
 trigger: none
 
-variables:
-  - group: hcs-credentials
-
 stages:
-  - stage: Bootstrap
+  - stage: Disabled
+    displayName: "Run-all disabled"
     jobs:
-      - template: ../templates/stage-validate.yml
-  - stage: PlanAll
-    dependsOn: Bootstrap
-    jobs:
-      - template: ../templates/stage-plan.yml
-  - stage: ApplyAll
-    dependsOn: PlanAll
-    jobs:
-      - template: ../templates/stage-apply.yml
+      - job: explain
+        displayName: "Explain supported execution model"
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - script: |
+              set -euo pipefail
+              echo "azure-pipelines-run-all.yml is intentionally disabled."
+              echo "Use per-stack pipelines with explicit stack_path values instead."
+              echo "Reference: pipelines/azure-pipelines-per-stack.yml and pipelines/azure-pipelines-stack-wrapper.yml"
+            displayName: "Run-all disabled by design"

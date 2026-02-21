@@ -14,7 +14,7 @@
 - [Conclusion](#conclusion)
 
 ## Overview
-This directory contains Azure DevOps pipeline entry points for per-stack deployment, run-all orchestration, stack-wrapper templates, and DRS demo execution.
+This directory contains Azure DevOps pipeline entry points for per-stack deployment, stack-wrapper templates, and DRS demo execution.
 
 ## Real-World Business Value
 The pipeline model standardises delivery quality by enforcing validation, policy checks, plan artefacts, and controlled apply steps.
@@ -45,6 +45,10 @@ Pipeline credentials are injected via secure variable groups (hcs-credentials) a
 - Security-aware credential handling.
 - Demo-targeted DRS pipeline path.
 - CI guardrail for Terraform identifier naming standards.
+
+### Execution Scope
+- Per-stack pipelines are the supported operating pattern.
+- The run-all entrypoint is intentionally disabled to prevent non-stack-scoped Terragrunt execution from repository root.
 
 ## Design Decisions and Highlights
 Selected Azure DevOps templates to preserve DRY principles and simplify policy-aligned scaling.

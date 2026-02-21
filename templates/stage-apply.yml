@@ -1,7 +1,11 @@
+# Applies the previously generated plan artifact through a gated deployment environment.
 parameters:
   - name: environment
     type: string
     default: "dev"
+  - name: path
+    type: string
+    default: "./"
 
 jobs:
   - deployment: terraform_apply
@@ -13,6 +17,7 @@ jobs:
       runOnce:
         deploy:
           steps:
+            - checkout: self
             - download: current
               artifact: tfplan
             - download: current
@@ -23,9 +28,13 @@ jobs:
                 sudo apt-get update -y
                 sudo apt-get install -y curl coreutils
                 TG_VERSION="0.55.12"
-                curl -fsSL "https://github.com/gruntwork-io/terragrunt/releases/download/v${TG_VERSION}/terragrunt_linux_amd64" -o /tmp/terragrunt_linux_amd64
-                curl -fsSL "https://github.com/gruntwork-io/terragrunt/releases/download/v${TG_VERSION}/terragrunt_linux_amd64.sha256" -o /tmp/terragrunt_linux_amd64.sha256
-                echo "$(cat /tmp/terragrunt_linux_amd64.sha256)  /tmp/terragrunt_linux_amd64" > /tmp/terragrunt_sha_check
+                TG_BASE_URL="https://github.com/gruntwork-io/terragrunt/releases/download/v${TG_VERSION}"
+                TG_BIN_URL="${TG_BASE_URL}/terragrunt_linux_amd64"
+                TG_SUM_URL="${TG_BASE_URL}/SHA256SUMS"
+                curl -fsSL "${TG_BIN_URL}" -o /tmp/terragrunt_linux_amd64
+                curl -fsSL "${TG_SUM_URL}" -o /tmp/terragrunt_SHA256SUMS
+                grep " terragrunt_linux_amd64$" /tmp/terragrunt_SHA256SUMS > /tmp/terragrunt_sha_check
+                sed -i 's| terragrunt_linux_amd64$|  /tmp/terragrunt_linux_amd64|' /tmp/terragrunt_sha_check
                 sha256sum -c /tmp/terragrunt_sha_check
                 sudo mv /tmp/terragrunt_linux_amd64 /usr/local/bin/terragrunt
                 sudo chmod +x /usr/local/bin/terragrunt
@@ -35,10 +44,12 @@ jobs:
                 echo "Setting HCS credentials from pipeline variables"
                 export TF_VAR_hcs_access_key="$(TF_VAR_hcs_access_key)"
                 export TF_VAR_hcs_secret_key="$(TF_VAR_hcs_secret_key)"
+                # Ensure apply runs in the intended stack directory.
+                cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
                 # The plan artifact is downloaded into the pipeline workspace under tfplan/
-                if [ -f tfplan/tfplan ]; then
+                if [ -f "$(Pipeline.Workspace)/tfplan/tfplan" ]; then
                   echo "Applying terragrunt plan"
-                  terragrunt apply -input=false -auto-approve tfplan/tfplan
+                  terragrunt apply -input=false -auto-approve "$(Pipeline.Workspace)/tfplan/tfplan"
                 else
                   echo "Plan artifact not found; aborting apply"
                   exit 1

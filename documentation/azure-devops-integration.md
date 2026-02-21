@@ -30,7 +30,7 @@ The integration model improves deployment consistency, lowers manual error rates
 5. Introduced checksum verification for tool binary downloads.
 
 ## Core Implementation Breakdown
-Pipelines execute Terragrunt stack validation, enforce naming guardrails (snake_case Terraform identifiers and policy-based kebab-case deployed names), produce reusable plan artefacts, apply through controlled deployment stages, and publish evidence for audit review.
+Pipelines execute fail-closed Terragrunt stack validation, enforce naming guardrails (snake_case Terraform identifiers and policy-based kebab-case deployed names), produce reusable plan artefacts, apply through controlled deployment stages, and publish evidence for audit review.
 
 ## IAM Role and Permissions
 Deployment identities are scoped to required state and target resources. Credentials are provided through secure Azure DevOps variable groups and should not be hardcoded.
@@ -40,6 +40,11 @@ Deployment identities are scoped to required state and target resources. Credent
 - Fail-closed validation logic.
 - Controlled apply context per stack path.
 - Evidence publication for traceability.
+
+### Current Execution Model
+- Supported: per-stack execution with explicit stack_path values.
+- Not supported: root-path run-all execution.
+- The run-all entrypoint is intentionally disabled to avoid unsafe, non-stack-scoped Terragrunt operations.
 
 ## Design Decisions and Highlights
 Template standardisation was selected to reduce duplication and preserve consistent controls across stack pipelines.

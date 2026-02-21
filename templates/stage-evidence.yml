@@ -1,3 +1,4 @@
+# Publishes an evidence pack artifact for audit and change-traceability.
 jobs:
   - job: collect_evidence
     displayName: "Collect evidence pack"

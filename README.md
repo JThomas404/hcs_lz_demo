@@ -42,6 +42,12 @@ The implementation reduces delivery risk by standardising environment provisioni
 - Guardrail enforcement: OPA policies are executed against generated plan JSON in validation stages.
 - CI/CD flow: validate, plan, apply, and evidence stages are templated and reused across per-stack pipelines.
 
+## Operational Status
+- Supported deployment model: per-stack pipelines with explicit stack paths via pipelines/azure-pipelines-per-stack.yml (or wrapper variants).
+- Run-all pipeline: intentionally disabled in pipelines/azure-pipelines-run-all.yml to prevent root-path Terragrunt execution.
+- Production-ready path: DRS demo stacks are fully wired and validated through current CI templates.
+- Needs completion before broad rollout: non-DRS stacks require explicit Terragrunt inputs to move from no-op defaults to deployable state.
+
 ## IAM Role and Permissions
 The operating model follows least privilege by separating read-only engineering access from pipeline write access to state and deployment targets. Pipeline credentials are injected through Azure DevOps variable groups rather than hardcoded into code.
 
