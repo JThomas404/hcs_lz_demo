@@ -19,9 +19,9 @@ The migration factory defines a repeatable DRS/DSM-aligned approach for high-vol
 Wave-based migration planning improves delivery predictability, reduces outage risk, and supports business-window alignment for critical services.
 
 ## Project Folder Structure
-- DRS module: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules/drs
-- DRS stacks: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/live/tenants/tenant-absa-bank/dev/vdcs/vdc-data/drs-primary
-- Runbook: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/blob/main/runbooks/drs-wave-runbook.md
+- DRS module: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/drs&version=GBjarred/lz-hardening-20260221&_a=contents
+- DRS stacks: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live/tenants/tenant-absa-bank/dev/vdcs/vdc-data/drs-primary&version=GBjarred/lz-hardening-20260221&_a=contents
+- Runbook: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/runbooks/drs-wave-runbook.md&version=GBjarred/lz-hardening-20260221&_a=contents
 
 ## Tasks and Implementation Steps
 1. Defined migration lifecycle phases.

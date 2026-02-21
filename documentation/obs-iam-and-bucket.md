@@ -19,8 +19,8 @@ This document captures OBS bucket and IAM guidance for secure Terraform state an
 A secure state backend model lowers operational risk, supports compliance, and improves incident recoverability.
 
 ## Project Folder Structure
-- Backend include: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/blob/main/live/terragrunt.backend.hcl
-- Backend notes: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/blob/main/documentation/state-backend.md
+- Backend include: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live/terragrunt.backend.hcl&version=GBjarred/lz-hardening-20260221&_a=contents
+- Backend notes: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/documentation/state-backend.md&version=GBjarred/lz-hardening-20260221&_a=contents
 
 ## Tasks and Implementation Steps
 1. Defined bucket and retention requirements.

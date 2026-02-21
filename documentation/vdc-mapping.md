@@ -19,8 +19,8 @@ This document maps level-one landing-zone stacks and level-two VDC stacks to own
 Clear stack mapping reduces ownership ambiguity and supports safer operational handover between platform and domain teams.
 
 ## Project Folder Structure
-- Tenant stacks: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/live/tenants/tenant-absa-bank
-- DRS demo stack: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/live/tenants/tenant-absa-bank/dev/vdcs/vdc-data/drs-primary
+- Tenant stacks: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live/tenants/tenant-absa-bank&version=GBjarred/lz-hardening-20260221&_a=contents
+- DRS demo stack: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live/tenants/tenant-absa-bank/dev/vdcs/vdc-data/drs-primary&version=GBjarred/lz-hardening-20260221&_a=contents
 
 ## Tasks and Implementation Steps
 1. Defined landing-zone stack responsibilities.

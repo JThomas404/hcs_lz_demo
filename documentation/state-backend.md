@@ -19,8 +19,8 @@ This document defines backend state implementation for Terragrunt/Terraform oper
 Reliable state handling is foundational to safe automation, reproducible plans, and rollback-capable operations.
 
 ## Project Folder Structure
-- Backend include: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/blob/main/live/terragrunt.backend.hcl
-- Example stack: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/live/tenants/tenant-absa-bank/dev
+- Backend include: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live/terragrunt.backend.hcl&version=GBjarred/lz-hardening-20260221&_a=contents
+- Example stack: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live/tenants/tenant-absa-bank/dev&version=GBjarred/lz-hardening-20260221&_a=contents
 
 ## Tasks and Implementation Steps
 1. Implemented central backend include.

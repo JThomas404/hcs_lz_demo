@@ -20,9 +20,9 @@ This runbook defines operational steps for executing DRS migration waves with va
 Structured migration operations reduce business disruption, improve audit readiness, and increase confidence in phased migration delivery.
 
 ## Project Folder Structure
-- Runbook path: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/blob/main/runbooks/drs-wave-runbook.md
-- DRS demo module: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules/drs
-- DRS dev stack: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/live/tenants/tenant-absa-bank/dev/vdcs/vdc-data/drs-primary
+- Runbook path: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/runbooks/drs-wave-runbook.md&version=GBjarred/lz-hardening-20260221&_a=contents
+- DRS demo module: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/drs&version=GBjarred/lz-hardening-20260221&_a=contents
+- DRS dev stack: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live/tenants/tenant-absa-bank/dev/vdcs/vdc-data/drs-primary&version=GBjarred/lz-hardening-20260221&_a=contents
 
 ## Tasks and Implementation Steps
 1. Preparation and pre-check execution.

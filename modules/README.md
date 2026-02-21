@@ -20,12 +20,12 @@ This directory contains reusable Terraform modules that implement core HCS build
 Reusable modules reduce implementation variance, increase review quality, and accelerate onboarding.
 
 ## Project Folder Structure
-- Modules root: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules
-- Network base: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules/network-base
-- RDS: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules/rds
-- KMS: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules/kms
-- OBS bucket: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules/obs-bucket
-- DRS demo: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules/drs
+- Modules root: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules&version=GBjarred/lz-hardening-20260221&_a=contents
+- Network base: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/network-base&version=GBjarred/lz-hardening-20260221&_a=contents
+- RDS: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/rds&version=GBjarred/lz-hardening-20260221&_a=contents
+- KMS: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/kms&version=GBjarred/lz-hardening-20260221&_a=contents
+- OBS bucket: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/obs-bucket&version=GBjarred/lz-hardening-20260221&_a=contents
+- DRS demo: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/drs&version=GBjarred/lz-hardening-20260221&_a=contents
 
 ## Tasks and Implementation Steps
 1. Defined module boundaries and input/output contracts.

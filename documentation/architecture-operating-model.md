@@ -19,10 +19,10 @@ The architecture implements a landing-zone-first delivery model on Huawei Cloud 
 This model enables predictable multi-environment rollout, reduces operational drift, and strengthens governance traceability across platform changes.
 
 ## Project Folder Structure
-- Landing zone stacks: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/live
-- Modules: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/modules
-- Pipelines: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/pipelines
-- Policies: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/policy
+- Landing zone stacks: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live&version=GBjarred/lz-hardening-20260221&_a=contents
+- Modules: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules&version=GBjarred/lz-hardening-20260221&_a=contents
+- Pipelines: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/pipelines&version=GBjarred/lz-hardening-20260221&_a=contents
+- Policies: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy&version=GBjarred/lz-hardening-20260221&_a=contents
 
 ## Tasks and Implementation Steps
 1. Established landing-zone and VDC stack topology.

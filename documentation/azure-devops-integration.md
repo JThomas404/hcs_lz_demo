@@ -19,8 +19,8 @@ This document defines Azure DevOps pipeline integration for secure HCS deploymen
 The integration model improves deployment consistency, lowers manual error rates, and provides clear governance checkpoints before infrastructure changes reach target environments.
 
 ## Project Folder Structure
-- Pipeline definitions: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/pipelines
-- Pipeline templates: https://github.com/RedM-CloudEngineering/platform-landingzone-iac/tree/main/templates
+- Pipeline definitions: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/pipelines&version=GBjarred/lz-hardening-20260221&_a=contents
+- Pipeline templates: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/templates&version=GBjarred/lz-hardening-20260221&_a=contents
 
 ## Tasks and Implementation Steps
 1. Configured secure variable group usage for credentials.
