@@ -1,0 +1,51 @@
+# Demo pipeline validates/plans/applies the DRS stack path with existing guardrails and evidence stages.
+trigger:
+  branches:
+    include:
+      - main
+      - develop
+  paths:
+    include:
+      - "live/tenants/tenant-absa-bank/dev/vdcs/vdc-data/drs-primary/**"
+
+variables:
+  - group: hcs-credentials
+
+parameters:
+  - name: stack_path
+    type: string
+    default: "live/tenants/tenant-absa-bank/dev/vdcs/vdc-data/drs-primary"
+  - name: environment
+    type: string
+    default: "dev"
+
+stages:
+  - stage: Validate
+    displayName: "Validate"
+    jobs:
+      - template: ../templates/stage-validate.yml
+        parameters:
+          path: ${{ parameters.stack_path }}
+
+  - stage: Plan
+    displayName: "Plan"
+    dependsOn: Validate
+    jobs:
+      - template: ../templates/stage-plan.yml
+        parameters:
+          path: ${{ parameters.stack_path }}
+
+  - stage: Apply
+    displayName: "Apply"
+    dependsOn: Plan
+    jobs:
+      - template: ../templates/stage-apply.yml
+        parameters:
+          environment: ${{ parameters.environment }}
+          path: ${{ parameters.stack_path }}
+
+  - stage: Evidence
+    displayName: "Evidence"
+    dependsOn: Apply
+    jobs:
+      - template: ../templates/stage-evidence.yml
