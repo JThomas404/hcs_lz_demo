@@ -20,9 +20,9 @@ This module implements a DRS/DSM demo control-plane pattern by composing KMS and
 The demo enables stakeholders to validate migration governance workflows end-to-end before introducing full production migration complexity.
 
 ## Project Folder Structure
-- Module path: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/drs&version=GBjarred/lz-hardening-20260221&_a=contents
-- Main implementation: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/drs/main.tf&version=GBjarred/lz-hardening-20260221&_a=contents
-- Demo stack path (dev): https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live/tenants/tenant-absa-bank/dev/vdcs/vdc-data/drs-primary&version=GBjarred/lz-hardening-20260221&_a=contents
+- Module path: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/drs&_a=contents
+- Main implementation: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/drs/main.tf&_a=contents
+- Demo stack path (dev): https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live/tenants/tenant-absa-bank/dev/vdcs/vdc-data/drs-primary&_a=contents
 
 ## Tasks and Implementation Steps
 1. Created module interface for demo toggles and naming.

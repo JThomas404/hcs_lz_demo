@@ -19,8 +19,8 @@ This document defines canonical naming and tagging controls used by Terraform mo
 Standard naming and metadata labelling improve governance reporting, ownership clarity, and cost attribution.
 
 ## Project Folder Structure
-- Tag policy: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy/opa/required-tags.rego&version=GBjarred/lz-hardening-20260221&_a=contents
-- Name policy: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy/opa/name-regex.rego&version=GBjarred/lz-hardening-20260221&_a=contents
+- Tag policy: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy/opa/required-tags.rego&_a=contents
+- Name policy: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy/opa/name-regex.rego&_a=contents
 
 ## Tasks and Implementation Steps
 1. Defined lowercase kebab-case conventions.

@@ -20,11 +20,11 @@ This directory contains OPA policies used by CI/CD validation stages to enforce 
 Policy gates shift compliance and security checks left, reducing the risk and cost of post-deployment remediation.
 
 ## Project Folder Structure
-- Policies root: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy/opa&version=GBjarred/lz-hardening-20260221&_a=contents
-- Required tags policy: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy/opa/required-tags.rego&version=GBjarred/lz-hardening-20260221&_a=contents
-- Name regex policy: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy/opa/name-regex.rego&version=GBjarred/lz-hardening-20260221&_a=contents
-- Public ingress policy: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy/opa/deny-public-ingress.rego&version=GBjarred/lz-hardening-20260221&_a=contents
-- Public egress policy: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy/opa/deny-public-egress.rego&version=GBjarred/lz-hardening-20260221&_a=contents
+- Policies root: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy/opa&_a=contents
+- Required tags policy: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy/opa/required-tags.rego&_a=contents
+- Name regex policy: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy/opa/name-regex.rego&_a=contents
+- Public ingress policy: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy/opa/deny-public-ingress.rego&_a=contents
+- Public egress policy: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy/opa/deny-public-egress.rego&_a=contents
 
 ## Tasks and Implementation Steps
 1. Implemented baseline policy rules for governance and exposure control.

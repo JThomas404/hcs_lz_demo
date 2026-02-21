@@ -20,8 +20,8 @@ This directory documents state backend operating principles for Terragrunt/Terra
 Reliable and auditable state management is critical for production automation, compliance evidence, and controlled recovery.
 
 ## Project Folder Structure
-- Backend include file: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live/terragrunt.backend.hcl&version=GBjarred/lz-hardening-20260221&_a=contents
-- Detailed notes: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/documentation/state-backend.md&version=GBjarred/lz-hardening-20260221&_a=contents
+- Backend include file: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live/terragrunt.backend.hcl&_a=contents
+- Detailed notes: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/documentation/state-backend.md&_a=contents
 
 ## Tasks and Implementation Steps
 1. Standardised backend configuration in a shared include.

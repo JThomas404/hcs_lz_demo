@@ -20,8 +20,8 @@ This module provides foundational VPC and private subnet provisioning capabiliti
 Network baseline standardisation prevents ad-hoc topology divergence and reduces security and routing misconfiguration risk.
 
 ## Project Folder Structure
-- Module path: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/network-base&version=GBjarred/lz-hardening-20260221&_a=contents
-- Main implementation: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/network-base/main.tf&version=GBjarred/lz-hardening-20260221&_a=contents
+- Module path: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/network-base&_a=contents
+- Main implementation: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/network-base/main.tf&_a=contents
 
 ## Tasks and Implementation Steps
 1. Defined VPC and subnet resources.

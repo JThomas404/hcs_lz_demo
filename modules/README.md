@@ -20,12 +20,12 @@ This directory contains reusable Terraform modules that implement core HCS build
 Reusable modules reduce implementation variance, increase review quality, and accelerate onboarding.
 
 ## Project Folder Structure
-- Modules root: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules&version=GBjarred/lz-hardening-20260221&_a=contents
-- Network base: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/network-base&version=GBjarred/lz-hardening-20260221&_a=contents
-- RDS: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/rds&version=GBjarred/lz-hardening-20260221&_a=contents
-- KMS: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/kms&version=GBjarred/lz-hardening-20260221&_a=contents
-- OBS bucket: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/obs-bucket&version=GBjarred/lz-hardening-20260221&_a=contents
-- DRS demo: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/drs&version=GBjarred/lz-hardening-20260221&_a=contents
+- Modules root: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules&_a=contents
+- Network base: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/network-base&_a=contents
+- RDS: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/rds&_a=contents
+- KMS: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/kms&_a=contents
+- OBS bucket: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/obs-bucket&_a=contents
+- DRS demo: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules/drs&_a=contents
 
 ## Tasks and Implementation Steps
 1. Defined module boundaries and input/output contracts.

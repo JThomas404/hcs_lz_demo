@@ -20,14 +20,14 @@ This repository delivers a Huawei Cloud Stack (HCS) landing zone and automation 
 The implementation reduces delivery risk by standardising environment provisioning and policy enforcement before deployment. It enables platform teams to scale changes across environments without introducing uncontrolled drift.
 
 ## Project Folder Structure
-- Repository root: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/README.md&version=GBjarred/lz-hardening-20260221&_a=preview
-- Live stacks: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live&version=GBjarred/lz-hardening-20260221&_a=contents
-- Terraform modules: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules&version=GBjarred/lz-hardening-20260221&_a=contents
-- Pipelines: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/pipelines&version=GBjarred/lz-hardening-20260221&_a=contents
-- Pipeline templates: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/templates&version=GBjarred/lz-hardening-20260221&_a=contents
-- Policies (OPA): https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy&version=GBjarred/lz-hardening-20260221&_a=contents
-- Documentation: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/documentation&version=GBjarred/lz-hardening-20260221&_a=contents
-- Runbooks: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/runbooks&version=GBjarred/lz-hardening-20260221&_a=contents
+- Repository root: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/README.md&_a=preview
+- Live stacks: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live&_a=contents
+- Terraform modules: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules&_a=contents
+- Pipelines: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/pipelines&_a=contents
+- Pipeline templates: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/templates&_a=contents
+- Policies (OPA): https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/policy&_a=contents
+- Documentation: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/documentation&_a=contents
+- Runbooks: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/runbooks&_a=contents
 
 ## Tasks and Implementation Steps
 1. Established environment parity for dev, non-prod, and prod stack topology.

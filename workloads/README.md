@@ -20,8 +20,8 @@ This directory represents workload-oriented implementation scope, including data
 Separating workload concerns from platform foundations improves ownership clarity and delivery sequencing for migration programmes.
 
 ## Project Folder Structure
-- Workloads root: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/workloads&version=GBjarred/lz-hardening-20260221&_a=contents
-- DRS runbook linkage: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/runbooks/drs-wave-runbook.md&version=GBjarred/lz-hardening-20260221&_a=contents
+- Workloads root: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/workloads&_a=contents
+- DRS runbook linkage: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/runbooks/drs-wave-runbook.md&_a=contents
 
 ## Tasks and Implementation Steps
 1. Defined workload domain boundary in repository structure.

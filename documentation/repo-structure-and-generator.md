@@ -19,10 +19,10 @@ This document explains repository layout and the bootstrap script that creates a
 A predictable repository shape reduces onboarding time, enables standard review patterns, and improves automation reliability.
 
 ## Project Folder Structure
-- Generator script: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/scripts/create_repo_skeleton.ps1&version=GBjarred/lz-hardening-20260221&_a=contents
-- Documentation root: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/documentation&version=GBjarred/lz-hardening-20260221&_a=contents
-- Live stacks: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live&version=GBjarred/lz-hardening-20260221&_a=contents
-- Modules: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules&version=GBjarred/lz-hardening-20260221&_a=contents
+- Generator script: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/scripts/create_repo_skeleton.ps1&_a=contents
+- Documentation root: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/documentation&_a=contents
+- Live stacks: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live&_a=contents
+- Modules: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/modules&_a=contents
 
 ## Tasks and Implementation Steps
 1. Defined target folder hierarchy for platform, policy, and delivery concerns.

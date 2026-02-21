@@ -20,11 +20,11 @@ This directory contains Azure DevOps pipeline entry points for per-stack deploym
 The pipeline model standardises delivery quality by enforcing validation, policy checks, plan artefacts, and controlled apply steps.
 
 ## Project Folder Structure
-- Per-stack pipeline: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/pipelines/azure-pipelines-per-stack.yml&version=GBjarred/lz-hardening-20260221&_a=contents
-- Run-all pipeline: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/pipelines/azure-pipelines-run-all.yml&version=GBjarred/lz-hardening-20260221&_a=contents
-- Stack wrapper pipeline: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/pipelines/azure-pipelines-stack-wrapper.yml&version=GBjarred/lz-hardening-20260221&_a=contents
-- DRS demo pipeline: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/pipelines/azure-pipelines-drs-demo.yml&version=GBjarred/lz-hardening-20260221&_a=contents
-- Shared templates: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/templates&version=GBjarred/lz-hardening-20260221&_a=contents
+- Per-stack pipeline: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/pipelines/azure-pipelines-per-stack.yml&_a=contents
+- Run-all pipeline: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/pipelines/azure-pipelines-run-all.yml&_a=contents
+- Stack wrapper pipeline: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/pipelines/azure-pipelines-stack-wrapper.yml&_a=contents
+- DRS demo pipeline: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/pipelines/azure-pipelines-drs-demo.yml&_a=contents
+- Shared templates: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/templates&_a=contents
 
 ## Tasks and Implementation Steps
 1. Defined reusable stage templates for validate, plan, apply, and evidence.
