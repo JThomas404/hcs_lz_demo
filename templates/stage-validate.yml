@@ -25,6 +25,14 @@ jobs:
 
       - script: |
           set -euo pipefail
+          echo "Running YAML lint checks"
+          python3 -m pip install --user yamllint==1.35.1
+          export PATH="$HOME/.local/bin:$PATH"
+          yamllint -c "$(Build.SourcesDirectory)/.yamllint" "$(Build.SourcesDirectory)/pipelines" "$(Build.SourcesDirectory)/templates"
+        displayName: "YAML lint"
+
+      - script: |
+          set -euo pipefail
           echo "Running Terraform identifier naming guardrail"
           chmod +x "$(Build.SourcesDirectory)/scripts/validate_tf_identifier_naming.sh"
           "$(Build.SourcesDirectory)/scripts/validate_tf_identifier_naming.sh" "$(Build.SourcesDirectory)"
@@ -44,7 +52,8 @@ jobs:
       - script: |
           set -euo pipefail
           echo "Installing Conftest (OPA)"
-          curl -sL https://github.com/open-policy-agent/conftest/releases/latest/download/conftest_linux_amd64.tar.gz | tar xz -C /tmp
+          CONFTEST_VERSION="0.56.0"
+          curl -sL "https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz" | tar xz -C /tmp
           sudo mv /tmp/conftest /usr/local/bin/conftest
           conftest --version
         displayName: "Install Conftest"

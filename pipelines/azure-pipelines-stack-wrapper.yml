@@ -41,6 +41,7 @@ stages:
       - template: ../templates/stage-apply.yml
         parameters:
           environment: ${{ parameters.environment }}
+          path: ${{ parameters.stack_path }}
 
   - stage: Evidence
     displayName: "Evidence"
