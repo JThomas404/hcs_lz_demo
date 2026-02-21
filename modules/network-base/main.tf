@@ -1,4 +1,4 @@
-resource "hcs_vpc" "this" {
+resource "hcs_vpc" "landing_zone" {
   count = var.create ? 1 : 0
 
   name = var.name
@@ -13,9 +13,9 @@ resource "hcs_vpc" "this" {
   }
 }
 
-resource "hcs_vpc_subnet" "private" {
+resource "hcs_vpc_subnet" "private_subnet" {
   count      = var.create ? length(var.private_subnets) : 0
-  vpc_id     = hcs_vpc.this[0].id
+  vpc_id     = hcs_vpc.landing_zone[0].id
   name       = "${var.name}-private-${count.index + 1}"
   cidr       = var.private_subnets[count.index]
   gateway_ip = null

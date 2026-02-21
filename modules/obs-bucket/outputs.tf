@@ -1,7 +1,9 @@
 output "bucket" {
-  value = hcs_obs_bucket.this.bucket
+  description = "Name of the created OBS bucket."
+  value       = hcs_obs_bucket.evidence.bucket
 }
 
 output "id" {
-  value = hcs_obs_bucket.this.id
+  description = "Resource ID of the created OBS bucket."
+  value       = hcs_obs_bucket.evidence.id
 }

@@ -26,10 +26,11 @@ The integration model improves deployment consistency, lowers manual error rates
 1. Configured secure variable group usage for credentials.
 2. Implemented validate/plan/apply/evidence stage templates.
 3. Added environment-gated deployment behaviour.
-4. Introduced checksum verification for tool binary downloads.
+4. Added Terraform identifier naming guardrail checks in validation.
+5. Introduced checksum verification for tool binary downloads.
 
 ## Core Implementation Breakdown
-Pipelines execute Terragrunt stack validation, produce reusable plan artefacts, apply through controlled deployment stages, and publish evidence for audit review.
+Pipelines execute Terragrunt stack validation, enforce naming guardrails (snake_case Terraform identifiers and policy-based kebab-case deployed names), produce reusable plan artefacts, apply through controlled deployment stages, and publish evidence for audit review.
 
 ## IAM Role and Permissions
 Deployment identities are scoped to required state and target resources. Credentials are provided through secure Azure DevOps variable groups and should not be hardcoded.

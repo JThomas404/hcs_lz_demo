@@ -30,8 +30,9 @@ Reusable modules reduce implementation variance, increase review quality, and ac
 ## Tasks and Implementation Steps
 1. Defined module boundaries and input/output contracts.
 2. Standardised provider/version constraints.
-3. Added safe defaults to avoid accidental provisioning in demo paths.
-4. Introduced DRS demo module for migration-control proof-of-concept.
+3. Standardised Terraform identifier naming with descriptive snake_case labels.
+4. Added safe defaults to avoid accidental provisioning in demo paths.
+5. Introduced DRS demo module for migration-control proof-of-concept.
 
 ## Core Implementation Breakdown
 - network-base: VPC and subnet baseline patterns.
@@ -39,6 +40,7 @@ Reusable modules reduce implementation variance, increase review quality, and ac
 - kms: key management primitives for encryption use cases.
 - obs-bucket: bucket and encryption integration support.
 - drs: demo control-plane composition using KMS and OBS modules.
+- Module interfaces include descriptions for variables and outputs to improve maintainability.
 
 ## IAM Role and Permissions
 Modules are designed to run under scoped deployment identities. Runtime credentials are provided by pipeline-secured variable groups.
@@ -48,6 +50,7 @@ Modules are designed to run under scoped deployment identities. Runtime credenti
 - Shared version pinning.
 - Input validation and safer defaults for demo execution.
 - Output contracts that support stack-to-stack integration.
+- Descriptive Terraform identifiers aligned to naming standards.
 
 ## Design Decisions and Highlights
 - Kept modules narrowly focused to maintain low coupling.

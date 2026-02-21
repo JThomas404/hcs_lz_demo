@@ -25,14 +25,14 @@ Structured migration operations reduce business disruption, improve audit readin
 - DRS dev stack: https://dev.azure.com/RedM-CloudEngineering/RedM-CloudForgeX/_git/platform-landingzone-iac?path=/live/tenants/tenant-absa-bank/dev/vdcs/vdc-data/drs-primary&_a=contents
 
 ## Tasks and Implementation Steps
-1. Preparation and pre-check execution.
+1. Preparation and pre-check execution, including naming guardrail compliance checks.
 2. Full-load and CDC monitoring.
 3. Validation gate and cutover readiness checks.
 4. Cutover execution and post-cutover verification.
 5. Evidence pack completion and sign-off.
 
 ## Core Implementation Breakdown
-Preparation, validation, cutover, and recovery gates are documented as explicit operational checkpoints.
+Preparation, validation, cutover, and recovery gates are documented as explicit operational checkpoints, with CI guardrails enforcing Terraform identifier standards and OPA policies enforcing deployed naming standards.
 
 ## IAM Role and Permissions
 Runbook execution assumes role separation between operators, approvers, and pipeline identities with strict least-privilege enforcement.

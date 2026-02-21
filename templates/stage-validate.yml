@@ -1,3 +1,4 @@
+# Runs formatting, validation, and OPA policy checks for a selected Terragrunt stack.
 parameters:
   - name: path
     type: string
@@ -24,6 +25,13 @@ jobs:
 
       - script: |
           set -euo pipefail
+          echo "Running Terraform identifier naming guardrail"
+          chmod +x "$(Build.SourcesDirectory)/scripts/validate_tf_identifier_naming.sh"
+          "$(Build.SourcesDirectory)/scripts/validate_tf_identifier_naming.sh" "$(Build.SourcesDirectory)"
+        displayName: "Terraform identifier naming guardrail"
+
+      - script: |
+          set -euo pipefail
           echo "Running terragrunt validate (if terragrunt present)"
           cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
           if command -v terragrunt >/dev/null 2>&1; then
@@ -43,12 +51,20 @@ jobs:
 
       - script: |
           set -euo pipefail
-          echo "Creating Terraform plan for policy checks"
+          echo "Creating plan.json for policy checks"
           cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
-          terraform init -input=false
-          terraform plan -out=tfplan -input=false
-          terraform show -json tfplan > plan.json
-        displayName: "terraform plan -> plan.json"
+          # For Terragrunt stacks (demo default), generate policy input via terragrunt plan.
+          if [ -f terragrunt.hcl ] && command -v terragrunt >/dev/null 2>&1; then
+            terragrunt init -input=false
+            terragrunt plan -out=tfplan -input=false
+            terragrunt show -json tfplan > plan.json
+          # Fallback path for raw Terraform stacks.
+          else
+            terraform init -input=false
+            terraform plan -out=tfplan -input=false
+            terraform show -json tfplan > plan.json
+          fi
+        displayName: "plan -> plan.json"
 
       - script: |
           set -euo pipefail

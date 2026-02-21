@@ -1,4 +1,4 @@
-resource "hcs_kms_key" "this" {
+resource "hcs_kms_key" "primary" {
   key_alias       = var.key_alias
   key_description = var.key_description
   pending_days    = var.pending_days

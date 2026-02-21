@@ -30,9 +30,10 @@ Policy gates shift compliance and security checks left, reducing the risk and co
 1. Implemented baseline policy rules for governance and exposure control.
 2. Integrated policy checks into validate stage execution.
 3. Extended policy evaluation to recurse into child modules.
+4. Enforced kebab-case for deployed name and bucket values, and alias/<kebab-case> for KMS aliases.
 
 ## Core Implementation Breakdown
-Naming policy enforces deterministic resource naming patterns. Tagging policy enforces mandatory ownership and classification metadata. Ingress and egress policies block public exposure patterns.
+Naming policy enforces deterministic deployed resource naming patterns (name, bucket, key_alias). Tagging policy enforces mandatory ownership and classification metadata. Ingress and egress policies block public exposure patterns.
 
 ## IAM Role and Permissions
 Policies operate in CI and require no additional cloud privileges; enforcement is tied to pipeline execution permissions.
@@ -41,12 +42,13 @@ Policies operate in CI and require no additional cloud privileges; enforcement i
 - Plan-aware policy evaluation.
 - Recursive module support.
 - Guardrails aligned to platform governance principles.
+- Strict kebab-case runtime naming enforcement.
 
 ## Design Decisions and Highlights
 Chosen OPA/Conftest integration for portability, testability, and readable policy intent.
 
 ## Errors Encountered and Resolved (optional)
-Adjusted policy structures to align with Terraform plan JSON shape and nested module traversal.
+Adjusted policy structures to align with Terraform plan JSON shape and nested module traversal, and tightened naming checks for runtime resource values.
 
 ## Skills Demonstrated
 - Policy-as-code design.

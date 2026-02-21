@@ -1,11 +1,14 @@
 output "id" {
-  value = try(hcs_rds_instance.this[0].id, null)
+  description = "Resource ID of the created RDS instance, or null when create is false."
+  value       = try(hcs_rds_instance.primary[0].id, null)
 }
 
 output "private_ips" {
-  value = try(hcs_rds_instance.this[0].private_ips, [])
+  description = "Private IP addresses of the created RDS instance."
+  value       = try(hcs_rds_instance.primary[0].private_ips, [])
 }
 
 output "status" {
-  value = try(hcs_rds_instance.this[0].status, null)
+  description = "Provisioning status of the RDS instance."
+  value       = try(hcs_rds_instance.primary[0].status, null)
 }

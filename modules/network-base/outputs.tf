@@ -1,7 +1,9 @@
 output "vpc_id" {
-  value = try(hcs_vpc.this[0].id, null)
+  description = "ID of the created VPC, or null when create is false."
+  value       = try(hcs_vpc.landing_zone[0].id, null)
 }
 
 output "subnet_ids" {
-  value = hcs_vpc_subnet.private[*].id
+  description = "List of created private subnet IDs."
+  value       = hcs_vpc_subnet.private_subnet[*].id
 }

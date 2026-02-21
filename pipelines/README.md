@@ -30,10 +30,11 @@ The pipeline model standardises delivery quality by enforcing validation, policy
 1. Defined reusable stage templates for validate, plan, apply, and evidence.
 2. Implemented fail-closed behaviour in critical stages.
 3. Added checksum verification for tool download integrity.
-4. Added demo-safe trigger controls to prevent noisy non-demo executions.
+4. Added Terraform identifier naming guardrail checks in validate stage.
+5. Added demo-safe trigger controls to prevent noisy non-demo executions.
 
 ## Core Implementation Breakdown
-Validate stage enforces formatting, Terragrunt validation, and OPA policy checks. Plan stage generates reusable artefacts. Apply stage executes gated deployment with stack-specific context. Evidence stage publishes traceability artefacts.
+Validate stage enforces formatting, Terraform identifier naming conventions (snake_case and descriptive labels), Terragrunt validation, and OPA policy checks. Plan stage generates reusable artefacts. Apply stage executes gated deployment with stack-specific context. Evidence stage publishes traceability artefacts.
 
 ## IAM Role and Permissions
 Pipeline credentials are injected via secure variable groups (hcs-credentials) and should be scoped with least privilege for state and target resources.
@@ -43,6 +44,7 @@ Pipeline credentials are injected via secure variable groups (hcs-credentials) a
 - Environment-gated apply patterns.
 - Security-aware credential handling.
 - Demo-targeted DRS pipeline path.
+- CI guardrail for Terraform identifier naming standards.
 
 ## Design Decisions and Highlights
 Selected Azure DevOps templates to preserve DRY principles and simplify policy-aligned scaling.

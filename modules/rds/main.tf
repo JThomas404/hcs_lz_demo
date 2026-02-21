@@ -1,4 +1,4 @@
-resource "hcs_rds_instance" "this" {
+resource "hcs_rds_instance" "primary" {
   count             = var.create ? 1 : 0
   name              = var.name
   flavor            = var.flavor
