@@ -46,3 +46,31 @@ $ids = Get-Content .\scripts\vscode-extensions.txt | ForEach-Object { ($_ -split
   - `.vscode/extensions.json` only surfaces recommendations; users must accept/install recommended extensions in the UI or via `code --install-extension`.
   - Ensure the `code` CLI is available in PATH on the target machine.
   - Some extensions require sign-in (e.g., Copilot, GitHub PRs) after install.
+
+
+Install extensions (PowerShell)
+``` powershell
+
+# ensure 'code' CLI is available; then:
+powershell -NoProfile -File .\scripts\install_vscode_extensions.ps1 -ExtensionsFile 'vscode-extensions.txt'
+# or install without pinned versions:
+Get-Content .\scripts\vscode-extensions.txt | ForEach-Object { ($_ -split '@')[0] } | ForEach-Object { code --install-extension $_ }
+
+```
+
+Install extensions (bash)
+
+``` bash
+
+# ensure 'code' is in PATH
+cut -d'@' -f1 scripts/vscode-extensions.txt | xargs -L 1 code --install-extension
+
+```
+
+List installed extensions (confirm successful installation)
+
+``` powershell
+
+code --list-extensions --show-versions
+
+```
