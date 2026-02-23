@@ -19,3 +19,30 @@ This folder contains helper scripts. To generate the full repository skeleton wi
 - Creates every directory and file from the manifest (empty content by default)
 - Skips existing files unless `-Force` is supplied
 - Default `RootPath` resolves to the repo root relative to the script location
+
+## VS Code extensions export and install
+
+- Exported installed extensions are included as `scripts/vscode-extensions.txt`.
+- Install on a target machine using the provided PowerShell installer script:
+
+```powershell
+powershell -NoProfile -File scripts/install_vscode_extensions.ps1 -ExtensionsFile 'vscode-extensions.txt'
+```
+
+- To install with exact pinned versions (if preferred):
+
+```powershell
+powershell -NoProfile -File scripts/install_vscode_extensions.ps1 -ExtensionsFile 'vscode-extensions.txt' -WithVersions
+```
+
+- To create a recommendations file for VS Code UI (no versions):
+
+```powershell
+$ids = Get-Content .\scripts\vscode-extensions.txt | ForEach-Object { ($_ -split '@')[0] }
+@{ recommendations = $ids } | ConvertTo-Json -Depth 3 | Set-Content .vscode\extensions.json
+```
+
+- Notes:
+  - `.vscode/extensions.json` only surfaces recommendations; users must accept/install recommended extensions in the UI or via `code --install-extension`.
+  - Ensure the `code` CLI is available in PATH on the target machine.
+  - Some extensions require sign-in (e.g., Copilot, GitHub PRs) after install.
