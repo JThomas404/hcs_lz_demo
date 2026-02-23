@@ -31,6 +31,16 @@ Standard naming and metadata labelling improve governance reporting, ownership c
 ## Core Implementation Breakdown
 Naming patterns are enforced through regex controls and required tag checks in OPA against plan JSON, plus a CI guardrail script for Terraform identifier conventions.
 
+Mandatory DRS tag standard:
+- owner (team ownership), for example: RedM-CloudForgeX
+- owner_name (individual accountability), for example: Jarred
+- ab_number (employee identifier), for example: AB044XP
+- environment (dev/non-prod/prod)
+- project (must be HCS_DBaas_Migration)
+- db_type (must be postgresql)
+- data_classification, created_by, lifecycle
+- cost_center is optional until a confirmed finance code is available
+
 Terraform identifier standard (snake_case):
 - Applies to resource local names, module names, variable names, and output names.
 - Rule of thumb:

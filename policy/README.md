@@ -35,6 +35,11 @@ Policy gates shift compliance and security checks left, reducing the risk and co
 ## Core Implementation Breakdown
 Naming policy enforces deterministic deployed resource naming patterns (name, bucket, key_alias). Tagging policy enforces mandatory ownership and classification metadata. Ingress and egress policies block public exposure patterns.
 
+Current required tag baseline for DRS stacks:
+- owner, owner_name, ab_number, environment, project, db_type, data_classification, created_by, lifecycle
+- project value is validated as HCS_DBaas_Migration
+- db_type value is validated as postgresql
+
 ## IAM Role and Permissions
 Policies operate in CI and require no additional cloud privileges; enforcement is tied to pipeline execution permissions.
 

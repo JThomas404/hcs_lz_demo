@@ -33,6 +33,9 @@ terraform.tfvars.json
 *.auto.tfvars.json
 .terraform.lock.hcl
 
+# Terragrunt cache
+.terragrunt-cache/
+
 
 ############################################
 # Logs / local outputs

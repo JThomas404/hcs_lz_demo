@@ -1,30 +1,41 @@
-# Demo DRS stack deploys control-plane artifacts for migration workflow validation.
-include "../../../../../../terragrunt.backend.hcl"
-
-locals {
-  tenant = "tenant-absa-bank"
-  env    = "dev"
-  vdc    = "vdc-data"
-  stack  = "drs-primary"
-  state_key = "${local.tenant}/${local.env}/${local.vdc}/${local.stack}/terraform.tfstate"
+include "root" {
+  path = find_in_parent_folders("root.hcl")
 }
 
 terraform {
   source = "../../../../../../../modules//drs"
 }
 
+locals {
+  environment = "dev"  # set per stack: dev/non-prod/prod
+}
+
 inputs = {
-  create               = true
+  environment          = local.environment
+  create               = true   # set false if you just want to validate
   create_kms           = true
-  name_prefix          = "absa-dev-data-drs"
-  evidence_bucket_name = "absa-dev-data-drs-evidence"
-  tags = {
-    owner               = "platform-core"
-    cost_center         = "CC1234"
-    environment         = "dev"
-    project             = "db-migration-dsm"
-    data_classification = "internal"
-    created_by          = "azdo-pipeline"
-    lifecycle           = "migration-temp"
-  }
+  name_prefix          = "absa-drs-${local.environment}"
+  evidence_bucket_name = "absa-drs-evidence-${local.environment}"
+  tags                 = merge(include.root.locals.common_tags, { environment = local.environment })
+}
+
+generate "provider" {
+  path      = "provider.tf"
+  if_exists = "overwrite_terragrunt"
+  contents  = <<-EOF
+    terraform {
+      required_providers {
+        hcs = {
+          source  = "huaweicloud/hcs"
+          version = "~> 2.4.0"
+        }
+      }
+    }
+
+    provider "hcs" {
+      region = include.root.locals.region
+      # Credentials come from env vars in the shell pipeline:
+      # HCS_ACCESS_KEY / HCS_SECRET_KEY / HCS_PROJECT_ID
+    }
+  EOF
 }

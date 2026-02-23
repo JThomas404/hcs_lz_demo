@@ -1,4 +1,4 @@
-resource "hcs_obs_bucket" "primary" {
+resource "hcs_obs_bucket" "evidence" {
   bucket     = var.bucket
   acl        = var.acl
   versioning = var.versioning

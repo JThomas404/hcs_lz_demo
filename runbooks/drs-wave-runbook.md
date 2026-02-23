@@ -31,6 +31,10 @@ Structured migration operations reduce business disruption, improve audit readin
 4. Cutover execution and post-cutover verification.
 5. Evidence pack completion and sign-off.
 
+Pre-check tag gate for DRS stacks:
+- Required tags: owner, owner_name, ab_number, environment, project, db_type, data_classification, created_by, lifecycle
+- Required values: project=HCS_DBaas_Migration and db_type=postgresql
+
 ## Core Implementation Breakdown
 Preparation, validation, cutover, and recovery gates are documented as explicit operational checkpoints, with CI guardrails enforcing Terraform identifier standards and OPA policies enforcing deployed naming standards.
 

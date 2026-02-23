@@ -1,4 +1,4 @@
-resource "hcs_kms_key" "primary" {
+resource "hcs_kms_key" "data_encryption" {
   key_alias       = var.key_alias
   key_description = var.key_description
   pending_days    = var.pending_days
