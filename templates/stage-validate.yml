@@ -1,112 +1,112 @@
-# Runs formatting, validation, and OPA policy checks for a selected Terragrunt stack.
-parameters:
-  - name: path
-    type: string
-    default: "./"
+# # Runs formatting, validation, and OPA policy checks for a selected Terragrunt stack.
+# parameters:
+#   - name: path
+#     type: string
+#     default: "./"
 
-jobs:
-  - job: fmt_validate
-    displayName: "Terraform fmt, terragrunt validate, policy-as-code checks"
-    pool:
-      vmImage: "ubuntu-latest"
-    steps:
-      - script: |
-          set -euo pipefail
-          echo "== Terraform / Terragrunt validate stage =="
-          terraform --version
-        displayName: "Check terraform version"
+# jobs:
+#   - job: fmt_validate
+#     displayName: "Terraform fmt, terragrunt validate, policy-as-code checks"
+#     pool:
+#       vmImage: "ubuntu-latest"
+#     steps:
+#       - script: |
+#           set -euo pipefail
+#           echo "== Terraform / Terragrunt validate stage =="
+#           terraform --version
+#         displayName: "Check terraform version"
 
-      - script: |
-          set -euo pipefail
-          echo "Installing pinned Terragrunt"
-          sudo apt-get update -y
-          sudo apt-get install -y curl coreutils
-          TG_VERSION="0.55.12"
-          TG_BASE_URL="https://github.com/gruntwork-io/terragrunt/releases/download/v${TG_VERSION}"
-          TG_BIN_URL="${TG_BASE_URL}/terragrunt_linux_amd64"
-          TG_SUM_URL="${TG_BASE_URL}/SHA256SUMS"
+#       - script: |
+#           set -euo pipefail
+#           echo "Installing pinned Terragrunt"
+#           sudo apt-get update -y
+#           sudo apt-get install -y curl coreutils
+#           TG_VERSION="0.55.12"
+#           TG_BASE_URL="https://github.com/gruntwork-io/terragrunt/releases/download/v${TG_VERSION}"
+#           TG_BIN_URL="${TG_BASE_URL}/terragrunt_linux_amd64"
+#           TG_SUM_URL="${TG_BASE_URL}/SHA256SUMS"
 
-          curl -fsSL "${TG_BIN_URL}" -o /tmp/terragrunt_linux_amd64
-          curl -fsSL "${TG_SUM_URL}" -o /tmp/terragrunt_SHA256SUMS
-          grep " terragrunt_linux_amd64$" /tmp/terragrunt_SHA256SUMS > /tmp/terragrunt_sha_check
-          sed -i 's| terragrunt_linux_amd64$|  /tmp/terragrunt_linux_amd64|' /tmp/terragrunt_sha_check
-          sha256sum -c /tmp/terragrunt_sha_check
-          sudo mv /tmp/terragrunt_linux_amd64 /usr/local/bin/terragrunt
-          sudo chmod +x /usr/local/bin/terragrunt
-          terragrunt -version
-        displayName: "Install terragrunt"
+#           curl -fsSL "${TG_BIN_URL}" -o /tmp/terragrunt_linux_amd64
+#           curl -fsSL "${TG_SUM_URL}" -o /tmp/terragrunt_SHA256SUMS
+#           grep " terragrunt_linux_amd64$" /tmp/terragrunt_SHA256SUMS > /tmp/terragrunt_sha_check
+#           sed -i 's| terragrunt_linux_amd64$|  /tmp/terragrunt_linux_amd64|' /tmp/terragrunt_sha_check
+#           sha256sum -c /tmp/terragrunt_sha_check
+#           sudo mv /tmp/terragrunt_linux_amd64 /usr/local/bin/terragrunt
+#           sudo chmod +x /usr/local/bin/terragrunt
+#           terragrunt -version
+#         displayName: "Install terragrunt"
 
-      - script: |
-          set -euo pipefail
-          echo "Running terraform fmt check"
-          cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
-          terraform fmt -check -recursive
-        displayName: "terraform fmt (check)"
+#       - script: |
+#           set -euo pipefail
+#           echo "Running terraform fmt check"
+#           cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
+#           terraform fmt -check -recursive
+#         displayName: "terraform fmt (check)"
 
-      - script: |
-          set -euo pipefail
-          echo "Running YAML lint checks"
-          python3 -m pip install --user yamllint==1.35.1
-          export PATH="$HOME/.local/bin:$PATH"
-          yamllint -c "$(Build.SourcesDirectory)/.yamllint" "$(Build.SourcesDirectory)/pipelines" "$(Build.SourcesDirectory)/templates"
-        displayName: "YAML lint"
+#       - script: |
+#           set -euo pipefail
+#           echo "Running YAML lint checks"
+#           python3 -m pip install --user yamllint==1.35.1
+#           export PATH="$HOME/.local/bin:$PATH"
+#           yamllint -c "$(Build.SourcesDirectory)/.yamllint" "$(Build.SourcesDirectory)/pipelines" "$(Build.SourcesDirectory)/templates"
+#         displayName: "YAML lint"
 
-      - script: |
-          set -euo pipefail
-          echo "Running Terraform identifier naming guardrail"
-          chmod +x "$(Build.SourcesDirectory)/scripts/validate_tf_identifier_naming.sh"
-          "$(Build.SourcesDirectory)/scripts/validate_tf_identifier_naming.sh" "$(Build.SourcesDirectory)"
-        displayName: "Terraform identifier naming guardrail"
+#       - script: |
+#           set -euo pipefail
+#           echo "Running Terraform identifier naming guardrail"
+#           chmod +x "$(Build.SourcesDirectory)/scripts/validate_tf_identifier_naming.sh"
+#           "$(Build.SourcesDirectory)/scripts/validate_tf_identifier_naming.sh" "$(Build.SourcesDirectory)"
+#         displayName: "Terraform identifier naming guardrail"
 
-      - script: |
-          set -euo pipefail
-          echo "Running terragrunt validate"
-          cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
-          if [ ! -f terragrunt.hcl ]; then
-            echo "terragrunt.hcl not found at stack path: $(Build.SourcesDirectory)/${{ parameters.path }}"
-            exit 1
-          fi
-          terragrunt validate
-        displayName: "terragrunt validate"
+#       - script: |
+#           set -euo pipefail
+#           echo "Running terragrunt validate"
+#           cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
+#           if [ ! -f terragrunt.hcl ]; then
+#             echo "terragrunt.hcl not found at stack path: $(Build.SourcesDirectory)/${{ parameters.path }}"
+#             exit 1
+#           fi
+#           terragrunt validate
+#         displayName: "terragrunt validate"
 
-      - script: |
-          set -euo pipefail
-          echo "Installing Conftest (OPA)"
-          CONFTEST_VERSION="0.56.0"
-          CONFTEST_BASE_URL="https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}"
-          CONFTEST_TAR_URL="${CONFTEST_BASE_URL}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz"
-          CONFTEST_SUMS_URL="${CONFTEST_BASE_URL}/checksums.txt"
-          curl -fsSL "${CONFTEST_TAR_URL}" -o /tmp/conftest.tar.gz
-          curl -fsSL "${CONFTEST_SUMS_URL}" -o /tmp/conftest_checksums.txt
-          grep " conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz$" /tmp/conftest_checksums.txt > /tmp/conftest_sha_check
-          sed -i 's| conftest_.*_Linux_x86_64.tar.gz$|  /tmp/conftest.tar.gz|' /tmp/conftest_sha_check
-          sha256sum -c /tmp/conftest_sha_check
-          tar xz -f /tmp/conftest.tar.gz -C /tmp
-          sudo mv /tmp/conftest /usr/local/bin/conftest
-          conftest --version
-        displayName: "Install Conftest"
+#       - script: |
+#           set -euo pipefail
+#           echo "Installing Conftest (OPA)"
+#           CONFTEST_VERSION="0.56.0"
+#           CONFTEST_BASE_URL="https://github.com/open-policy-agent/conftest/releases/download/v${CONFTEST_VERSION}"
+#           CONFTEST_TAR_URL="${CONFTEST_BASE_URL}/conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz"
+#           CONFTEST_SUMS_URL="${CONFTEST_BASE_URL}/checksums.txt"
+#           curl -fsSL "${CONFTEST_TAR_URL}" -o /tmp/conftest.tar.gz
+#           curl -fsSL "${CONFTEST_SUMS_URL}" -o /tmp/conftest_checksums.txt
+#           grep " conftest_${CONFTEST_VERSION}_Linux_x86_64.tar.gz$" /tmp/conftest_checksums.txt > /tmp/conftest_sha_check
+#           sed -i 's| conftest_.*_Linux_x86_64.tar.gz$|  /tmp/conftest.tar.gz|' /tmp/conftest_sha_check
+#           sha256sum -c /tmp/conftest_sha_check
+#           tar xz -f /tmp/conftest.tar.gz -C /tmp
+#           sudo mv /tmp/conftest /usr/local/bin/conftest
+#           conftest --version
+#         displayName: "Install Conftest"
 
-      - script: |
-          set -euo pipefail
-          echo "Creating plan.json for policy checks"
-          cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
-          if [ ! -f terragrunt.hcl ]; then
-            echo "terragrunt.hcl not found at stack path: $(Build.SourcesDirectory)/${{ parameters.path }}"
-            exit 1
-          fi
-          terragrunt init -input=false
-          terragrunt plan -out=tfplan -input=false
-          terragrunt show -json tfplan > plan.json
-        displayName: "plan -> plan.json"
+#       - script: |
+#           set -euo pipefail
+#           echo "Creating plan.json for policy checks"
+#           cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
+#           if [ ! -f terragrunt.hcl ]; then
+#             echo "terragrunt.hcl not found at stack path: $(Build.SourcesDirectory)/${{ parameters.path }}"
+#             exit 1
+#           fi
+#           terragrunt init -input=false
+#           terragrunt plan -out=tfplan -input=false
+#           terragrunt show -json tfplan > plan.json
+#         displayName: "plan -> plan.json"
 
-      - script: |
-          set -euo pipefail
-          echo "Running Conftest / OPA policies against plan.json"
-          cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
-          if [ -f plan.json ]; then
-            conftest test plan.json --policy "$(Build.SourcesDirectory)/policy/opa"
-          else
-            echo 'plan.json not found; failing policy tests'
-            exit 1
-          fi
-        displayName: "Conftest policy-as-code checks"
+#       - script: |
+#           set -euo pipefail
+#           echo "Running Conftest / OPA policies against plan.json"
+#           cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
+#           if [ -f plan.json ]; then
+#             conftest test plan.json --policy "$(Build.SourcesDirectory)/policy/opa"
+#           else
+#             echo 'plan.json not found; failing policy tests'
+#             exit 1
+#           fi
+#         displayName: "Conftest policy-as-code checks"

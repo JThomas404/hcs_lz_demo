@@ -1,64 +1,64 @@
-# Installs Terraform/Terragrunt and generates a reusable plan artifact for the target stack.
-parameters:
-  - name: path
-    type: string
-    default: "./"
+# # Installs Terraform/Terragrunt and generates a reusable plan artifact for the target stack.
+# parameters:
+#   - name: path
+#     type: string
+#     default: "./"
 
-jobs:
-  - job: terraform_plan
-    displayName: "Terragrunt plan"
-    pool:
-      vmImage: "ubuntu-latest"
-    steps:
-      - checkout: self
+# jobs:
+#   - job: terraform_plan
+#     displayName: "Terragrunt plan"
+#     pool:
+#       vmImage: "ubuntu-latest"
+#     steps:
+#       - checkout: self
 
-      - script: |
-          set -euo pipefail
-          echo "Install Terraform and Terragrunt (example, pin versions in prod)"
-          sudo apt-get update -y
-          sudo apt-get install -y unzip curl coreutils
-          TF_VERSION="1.5.5"
-          TG_VERSION="0.55.12"
-          TF_BASE_URL="https://releases.hashicorp.com/terraform/${TF_VERSION}"
-          TF_ZIP_URL="${TF_BASE_URL}/terraform_${TF_VERSION}_linux_amd64.zip"
-          TF_SUM_URL="${TF_BASE_URL}/terraform_${TF_VERSION}_SHA256SUMS"
-          TG_BASE_URL="https://github.com/gruntwork-io/terragrunt/releases/download/v${TG_VERSION}"
-          TG_BIN_URL="${TG_BASE_URL}/terragrunt_linux_amd64"
-          TG_SUM_URL="${TG_BASE_URL}/SHA256SUMS"
+#       - script: |
+#           set -euo pipefail
+#           echo "Install Terraform and Terragrunt (example, pin versions in prod)"
+#           sudo apt-get update -y
+#           sudo apt-get install -y unzip curl coreutils
+#           TF_VERSION="1.5.5"
+#           TG_VERSION="0.55.12"
+#           TF_BASE_URL="https://releases.hashicorp.com/terraform/${TF_VERSION}"
+#           TF_ZIP_URL="${TF_BASE_URL}/terraform_${TF_VERSION}_linux_amd64.zip"
+#           TF_SUM_URL="${TF_BASE_URL}/terraform_${TF_VERSION}_SHA256SUMS"
+#           TG_BASE_URL="https://github.com/gruntwork-io/terragrunt/releases/download/v${TG_VERSION}"
+#           TG_BIN_URL="${TG_BASE_URL}/terragrunt_linux_amd64"
+#           TG_SUM_URL="${TG_BASE_URL}/SHA256SUMS"
 
-          curl -fsSL "${TF_ZIP_URL}" -o /tmp/terraform.zip
-          curl -fsSL "${TF_SUM_URL}" -o /tmp/terraform_SHA256SUMS
-          grep " terraform_${TF_VERSION}_linux_amd64.zip$" /tmp/terraform_SHA256SUMS > /tmp/terraform_SHA256SUMS_check
-          (cd /tmp && sha256sum -c terraform_SHA256SUMS_check)
-          sudo unzip -o /tmp/terraform.zip -d /usr/local/bin
-          curl -fsSL "${TG_BIN_URL}" -o /tmp/terragrunt_linux_amd64
-          curl -fsSL "${TG_SUM_URL}" -o /tmp/terragrunt_SHA256SUMS
-          grep " terragrunt_linux_amd64$" /tmp/terragrunt_SHA256SUMS > /tmp/terragrunt_sha_check
-          sed -i 's| terragrunt_linux_amd64$|  /tmp/terragrunt_linux_amd64|' /tmp/terragrunt_sha_check
-          sha256sum -c /tmp/terragrunt_sha_check
-          sudo mv /tmp/terragrunt_linux_amd64 /usr/local/bin/terragrunt
-          sudo chmod +x /usr/local/bin/terragrunt
-          terraform -version
-          terragrunt -version
-        displayName: "Install terraform & terragrunt"
+#           curl -fsSL "${TF_ZIP_URL}" -o /tmp/terraform.zip
+#           curl -fsSL "${TF_SUM_URL}" -o /tmp/terraform_SHA256SUMS
+#           grep " terraform_${TF_VERSION}_linux_amd64.zip$" /tmp/terraform_SHA256SUMS > /tmp/terraform_SHA256SUMS_check
+#           (cd /tmp && sha256sum -c terraform_SHA256SUMS_check)
+#           sudo unzip -o /tmp/terraform.zip -d /usr/local/bin
+#           curl -fsSL "${TG_BIN_URL}" -o /tmp/terragrunt_linux_amd64
+#           curl -fsSL "${TG_SUM_URL}" -o /tmp/terragrunt_SHA256SUMS
+#           grep " terragrunt_linux_amd64$" /tmp/terragrunt_SHA256SUMS > /tmp/terragrunt_sha_check
+#           sed -i 's| terragrunt_linux_amd64$|  /tmp/terragrunt_linux_amd64|' /tmp/terragrunt_sha_check
+#           sha256sum -c /tmp/terragrunt_sha_check
+#           sudo mv /tmp/terragrunt_linux_amd64 /usr/local/bin/terragrunt
+#           sudo chmod +x /usr/local/bin/terragrunt
+#           terraform -version
+#           terragrunt -version
+#         displayName: "Install terraform & terragrunt"
 
-      - script: |
-          echo "Setting HCS credentials from pipeline variables"
-          export TF_VAR_hcs_access_key="$(TF_VAR_hcs_access_key)"
-          export TF_VAR_hcs_secret_key="$(TF_VAR_hcs_secret_key)"
-          cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
-          echo "Initializing terragrunt"
-          terragrunt init -input=false
-          terragrunt plan -out=tfplan -input=false
-          terragrunt show -json tfplan > tfplan.json
-        displayName: "terragrunt init & plan"
+#       - script: |
+#           echo "Setting HCS credentials from pipeline variables"
+#           export TF_VAR_hcs_access_key="$(TF_VAR_hcs_access_key)"
+#           export TF_VAR_hcs_secret_key="$(TF_VAR_hcs_secret_key)"
+#           cd "$(Build.SourcesDirectory)/${{ parameters.path }}"
+#           echo "Initializing terragrunt"
+#           terragrunt init -input=false
+#           terragrunt plan -out=tfplan -input=false
+#           terragrunt show -json tfplan > tfplan.json
+#         displayName: "terragrunt init & plan"
 
-      - task: PublishPipelineArtifact@1
-        inputs:
-          targetPath: "$(Build.SourcesDirectory)/${{ parameters.path }}/tfplan"
-          artifact: "tfplan"
+#       - task: PublishPipelineArtifact@1
+#         inputs:
+#           targetPath: "$(Build.SourcesDirectory)/${{ parameters.path }}/tfplan"
+#           artifact: "tfplan"
 
-      - task: PublishPipelineArtifact@1
-        inputs:
-          targetPath: "$(Build.SourcesDirectory)/${{ parameters.path }}/tfplan.json"
-          artifact: "tfplan-json"
+#       - task: PublishPipelineArtifact@1
+#         inputs:
+#           targetPath: "$(Build.SourcesDirectory)/${{ parameters.path }}/tfplan.json"
+#           artifact: "tfplan-json"

@@ -1,3 +1,4 @@
+/*
 terraform {
   required_providers {
     huaweicloud = {
@@ -5,3 +6,4 @@ terraform {
     }
   }
 }
+*/

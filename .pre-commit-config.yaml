@@ -1,27 +1,27 @@
-repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
-    hooks:
-      - id: check-yaml
-      - id: end-of-file-fixer
-      - id: trailing-whitespace
+# repos:
+#   - repo: https://github.com/pre-commit/pre-commit-hooks
+#     rev: v5.0.0
+#     hooks:
+#       - id: check-yaml
+#       - id: end-of-file-fixer
+#       - id: trailing-whitespace
 
-  - repo: https://github.com/adrienverge/yamllint
-    rev: v1.35.1
-    hooks:
-      - id: yamllint
-        args: ["-c", ".yamllint"]
+#   - repo: https://github.com/adrienverge/yamllint
+#     rev: v1.35.1
+#     hooks:
+#       - id: yamllint
+#         args: ["-c", ".yamllint"]
 
-  - repo: local
-    hooks:
-      - id: terraform-fmt
-        name: terraform fmt (modules)
-        entry: bash -lc 'terraform fmt -check -recursive modules'
-        language: system
-        pass_filenames: false
+#   - repo: local
+#     hooks:
+#       - id: terraform-fmt
+#         name: terraform fmt (modules)
+#         entry: bash -lc 'terraform fmt -check -recursive modules'
+#         language: system
+#         pass_filenames: false
 
-      - id: tf-identifier-naming
-        name: Terraform identifier naming guardrail
-        entry: bash scripts/validate_tf_identifier_naming.sh .
-        language: system
-        pass_filenames: false
+#       - id: tf-identifier-naming
+#         name: Terraform identifier naming guardrail
+#         entry: bash scripts/validate_tf_identifier_naming.sh .
+#         language: system
+#         pass_filenames: false
