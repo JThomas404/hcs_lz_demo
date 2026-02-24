@@ -29,6 +29,7 @@ resource "huaweicloud_drs_job" "this" {
     password    = var.destination_db_password
     instance_id = var.destination_instance_id
     subnet_id   = var.destination_subnet_id
+    tags = var.tags
   }
 
   # Sync exactly one database (DRS "sync" requires a level selection).

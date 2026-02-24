@@ -8,6 +8,7 @@ resource "huaweicloud_rds_instance" "this" {
   security_group_id = var.security_group_id
 
   availability_zone = [var.primary_az, var.standby_az]
+  tags              = var.tags
 
 
   db {

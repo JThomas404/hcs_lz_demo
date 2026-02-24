@@ -99,3 +99,24 @@ variable "ecs_keypair_name" {
   type        = string
   description = "Existing keypair name in this region"
 }
+
+variable "owner_name" {
+  type        = string
+  description = "Resource owner name (changes per person)"
+}
+
+variable "ab_number" {
+  type        = string
+  description = "AB number (changes per person)"
+}
+
+variable "environment" {
+  type        = string
+  description = "Environment name (dev, non-prod, prod)"
+}
+
+variable "common_tags" {
+  type        = map(string)
+  description = "Additional organisation-wide tags to merge into resources"
+  default     = {}
+}

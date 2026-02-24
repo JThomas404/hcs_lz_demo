@@ -17,3 +17,9 @@
 #   description = "Whether Terraform is allowed to delete the bucket (should be false for WORM buckets)"
 #   type        = bool
 # }
+
+# variable "tags" {
+#   type        = map(string)
+#   description = "Tags applied to all resources in this module"
+#   default     = {}
+# }

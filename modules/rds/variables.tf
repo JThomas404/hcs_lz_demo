@@ -12,3 +12,9 @@ variable "volume_type" { type = string }
 variable "volume_size" { type = number }
 variable "backup_start_time" { type = string }
 variable "backup_keep_days" { type = number }
+
+variable "tags" {
+  type        = map(string)
+  description = "Tags applied to all resources in this module"
+  default     = {}
+}

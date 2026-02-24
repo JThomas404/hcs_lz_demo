@@ -15,3 +15,9 @@ variable "db_port" {
   type        = number
   description = "Database port to allow inbound within the VPC CIDR"
 }
+
+variable "tags" {
+  type        = map(string)
+  description = "Tags applied to all resources in this module"
+  default     = {}
+}

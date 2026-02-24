@@ -56,3 +56,30 @@ variable "allowed_postgres_ips" {
   description = "Guardrail list for DB access (not wired yet in network-base module)"
   default     = []
 }
+
+variable "environment" {
+  type        = string
+  description = "Environment name, e.g. dev, non-prod, prod"
+}
+
+variable "owner_name" {
+  type        = string
+  description = "Owner's first name"
+}
+
+variable "ab_number" {
+  type        = string
+  description = "Owner AB number, e.g. AB044XP"
+}
+
+variable "common_tags" {
+  type        = map(string)
+  description = "Common tags applied to all resources"
+  default     = {}
+}
+
+variable "tags" {
+  type        = map(string)
+  description = "Tags applied to all supported resources in this module"
+  default     = {}
+}

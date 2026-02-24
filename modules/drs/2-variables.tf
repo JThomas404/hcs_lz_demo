@@ -64,4 +64,10 @@ variable "destination_db_password" {
   type      = string
   sensitive = true
 }
+
+variable "tags" {
+  type        = map(string)
+  description = "Tags applied to all resources in this module"
+  default     = {}
+}
 */

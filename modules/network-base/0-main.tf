@@ -1,6 +1,7 @@
 resource "huaweicloud_vpc" "this" {
   name = "${var.name_prefix}-vpc-demo"
   cidr = var.vpc_cidr
+  tags = var.tags
 }
 
 resource "huaweicloud_vpc_subnet" "this" {
@@ -10,11 +11,13 @@ resource "huaweicloud_vpc_subnet" "this" {
   vpc_id     = huaweicloud_vpc.this.id
 
   availability_zone = var.availability_zone
+  tags = var.tags
 }
 
 resource "huaweicloud_networking_secgroup" "this" {
   name        = "${var.name_prefix}-sg"
   description = "Security group for ECS and RDS test build"
+  tags = var.tags
 }
 
 resource "huaweicloud_networking_secgroup_rule" "ssh_in" {
@@ -25,6 +28,7 @@ resource "huaweicloud_networking_secgroup_rule" "ssh_in" {
   port_range_max    = 22
   remote_ip_prefix  = var.admin_ssh_cidr
   security_group_id = huaweicloud_networking_secgroup.this.id
+  
 }
 
 resource "huaweicloud_networking_secgroup_rule" "db_in_vpc" {

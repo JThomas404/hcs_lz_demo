@@ -1,3 +1,17 @@
+locals {
+  tags = merge(
+    {
+      db_type             = "postgresql"
+      data_classification = "internal"
+      owner               = "RedM-CloudForgeX"
+      owner_name          = var.owner_name
+      ab_number           = var.ab_number
+      environment         = var.environment
+    },
+    var.common_tags
+  )
+}
+
 data "terraform_remote_state" "core_network" {
   backend = "local"
   config = {
@@ -24,6 +38,7 @@ module "rds" {
   volume_size       = var.db_volume_size
   backup_start_time = var.backup_start_time
   backup_keep_days  = var.backup_keep_days
+  tags              = local.tags
 }
 
 module "ecs" {
@@ -38,4 +53,6 @@ module "ecs" {
   image_name   = var.ecs_image_name
   flavor       = var.ecs_flavor
   keypair_name = var.ecs_keypair_name
+  tags         = local.tags
+
 }
