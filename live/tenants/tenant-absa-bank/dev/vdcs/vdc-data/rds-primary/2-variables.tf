@@ -115,8 +115,34 @@ variable "environment" {
   description = "Environment name (dev, non-prod, prod)"
 }
 
-variable "common_tags" {
-  type        = map(string)
-  description = "Additional organisation-wide tags to merge into resources"
-  default     = {}
+variable "auth_url" {
+  type        = string
+  description = "HCS IAM v3 URL, e.g. https://<host>:31943/v3"
+  default     = ""
+}
+
+variable "domain_name" {
+  type        = string
+  description = "IAM domain name (for name-based scoping in HCS)"
+  default     = ""
+}
+
+variable "project_name" {
+  type        = string
+  description = "Project name (for name-based scoping in HCS)"
+  default     = ""
+}
+
+variable "access_key" {
+  type        = string
+  description = "Huawei Cloud Access Key"
+  sensitive   = true
+  default     = ""
+}
+
+variable "secret_key" {
+  type        = string
+  description = "Huawei Cloud Secret Key"
+  sensitive   = true
+  default     = ""
 }

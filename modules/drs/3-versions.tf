@@ -1,9 +1,8 @@
-/*
-terraform {
-  required_providers {
-    huaweicloud = {
-      source = "huaweicloud/huaweicloud"
-    }
-  }
-}
-*/
+# terraform {
+#   required_providers {
+#     hcs = {
+#       source  = "huaweicloud/hcs"
+#       version = "~> 2.4"
+#     }
+#   }
+# }

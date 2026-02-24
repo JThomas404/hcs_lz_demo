@@ -1,13 +1,13 @@
-#resource "huaweicloud_obs_bucket" "this" {
- # bucket        = var.bucket_name
-  #acl           = "private"
-  #force_destroy = var.force_destroy
+#resource "hcs_obs_bucket" "this" {
+# bucket        = var.bucket_name
+#acl           = "private"
+#force_destroy = var.force_destroy
 
-  #versioning = true
+#versioning = true
 
 #}
 
-# resource "huaweicloud_obs_bucket" "this" {
+# resource "hcs_obs_bucket" "this" {
 #   bucket        = var.bucket_name
 #   acl           = "private"
 #   force_destroy = var.force_destroy

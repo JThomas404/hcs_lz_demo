@@ -1,9 +1,6 @@
 variable "name_prefix" { type = string }
-
 variable "vpc_cidr" { type = string }
-
 variable "subnet_cidr" { type = string }
-
 variable "availability_zone" { type = string }
 
 variable "admin_ssh_cidr" {
@@ -18,6 +15,6 @@ variable "db_port" {
 
 variable "tags" {
   type        = map(string)
-  description = "Tags applied to all resources in this module"
+  description = "Tags applied to all supported resources"
   default     = {}
 }

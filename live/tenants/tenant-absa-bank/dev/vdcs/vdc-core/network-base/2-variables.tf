@@ -1,23 +1,43 @@
 variable "region" {
   type        = string
-  description = "Huawei Cloud region, e.g. af-south-1"
+  description = "HCS region name, e.g. sa-global-1"
 }
 
-variable "project_id" {
+variable "cloud" {
   type        = string
-  description = "Huawei Cloud Project ID"
+  description = "HCS cloud endpoint/domain, e.g. db.absa.co.za"
 }
 
+variable "auth_url" {
+  type        = string
+  description = "IAM (Keystone) v3 URL, e.g. https://iam-apigateway-proxy.<region>.<cloud>/v3"
+  default     = ""
+}
+
+variable "project_name" {
+  type        = string
+  description = "HCS project name (scope for resources)"
+}
+
+variable "domain_name" {
+  type        = string
+  description = "HCS domain/tenant name"
+  default     = ""
+}
+
+# Prefer environment variables for AK/SK.
 variable "access_key" {
   type        = string
-  description = "Huawei Cloud Access Key"
+  description = "HCS access key (avoid committing this; prefer HCS_ACCESS_KEY env var)"
   sensitive   = true
+  default     = ""
 }
 
 variable "secret_key" {
   type        = string
-  description = "Huawei Cloud Secret Key"
+  description = "HCS secret key (avoid committing this; prefer HCS_SECRET_KEY env var)"
   sensitive   = true
+  default     = ""
 }
 
 variable "name_prefix" {
@@ -37,7 +57,7 @@ variable "subnet_cidr" {
 
 variable "vpc_az" {
   type        = string
-  description = "Availability zone for subnet, e.g. af-south-1a"
+  description = "Availability zone for subnet, e.g. sa-global-1a"
 }
 
 variable "ecs_admin_cidr" {
@@ -47,16 +67,10 @@ variable "ecs_admin_cidr" {
 
 variable "db_port" {
   type        = number
-  description = "Database port, e.g. 5432"
+  description = "Database port, e.g. 5432 for PostgreSQL"
 }
 
-# Optional for later (silences warnings if present in tfvars)
-variable "allowed_postgres_ips" {
-  type        = list(string)
-  description = "Guardrail list for DB access (not wired yet in network-base module)"
-  default     = []
-}
-
+# Tag inputs
 variable "environment" {
   type        = string
   description = "Environment name, e.g. dev, non-prod, prod"
@@ -69,17 +83,5 @@ variable "owner_name" {
 
 variable "ab_number" {
   type        = string
-  description = "Owner AB number, e.g. AB044XP"
-}
-
-variable "common_tags" {
-  type        = map(string)
-  description = "Common tags applied to all resources"
-  default     = {}
-}
-
-variable "tags" {
-  type        = map(string)
-  description = "Tags applied to all supported resources in this module"
-  default     = {}
+  description = "Owner AB number"
 }

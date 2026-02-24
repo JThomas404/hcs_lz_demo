@@ -1,4 +1,4 @@
-resource "huaweicloud_rds_instance" "this" {
+resource "hcs_rds_instance" "this" {
   name                = "${var.name_prefix}-rds"
   flavor              = var.flavor
   ha_replication_mode = "async"

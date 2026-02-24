@@ -1,15 +1,12 @@
 locals {
-  tags = merge(
-    {
-     db_type = "postgresql"
-      data_classification = "internal"
-      owner               = "RedM-CloudForgeX"
-      owner_name          = var.owner_name
-      ab_number           = var.ab_number
-      environment         = var.environment
-    },
-    var.common_tags
-  )
+  tags = {
+    db_type             = "postgresql"
+    data_classification = "internal"
+    owner               = "RedM-CloudForgeX"
+    owner_name          = var.owner_name
+    ab_number           = var.ab_number
+    environment         = var.environment
+  }
 }
 
 module "network_base" {
@@ -22,5 +19,6 @@ module "network_base" {
 
   admin_ssh_cidr = var.ecs_admin_cidr
   db_port        = var.db_port
-  tags           = local.tags
+
+  tags = local.tags
 }

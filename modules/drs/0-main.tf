@@ -1,5 +1,5 @@
 /*
-resource "huaweicloud_drs_job" "this" {
+resource "hcs_drs_job" "this" {
   name        = "${var.name_prefix}-drs"
   type        = "sync"
   engine_type = "postgresql"

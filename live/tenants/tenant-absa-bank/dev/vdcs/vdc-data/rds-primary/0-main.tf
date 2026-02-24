@@ -8,7 +8,6 @@ locals {
       ab_number           = var.ab_number
       environment         = var.environment
     },
-    var.common_tags
   )
 }
 
