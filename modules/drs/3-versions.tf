@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     huaweicloud = {
-      source = "huaweicloud/huaweicloud"
+      source = "huaweicloud/hcs"
     }
   }
 }

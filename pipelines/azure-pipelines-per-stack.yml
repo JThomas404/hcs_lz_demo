@@ -1,45 +1,8 @@
-# # Demo safety: disable broad triggers to avoid noisy/non-demo runs during DRS demonstration.
-# trigger: none
-# pr: none
-
-# variables:
-#   - group: hcs-credentials
-
-# parameters:
-#   - name: stack_path
-#     type: string
-#     default: ""
-#   - name: environment
-#     type: string
-#     default: "dev"
-
-# stages:
-#   - stage: Validate
-#     displayName: "Validate"
-#     jobs:
-#       - template: ../templates/stage-validate.yml
-#         parameters:
-#           path: ${{ parameters.stack_path }}
-
-#   - stage: Plan
-#     displayName: "Plan"
-#     dependsOn: Validate
-#     jobs:
-#       - template: ../templates/stage-plan.yml
-#         parameters:
-#           path: ${{ parameters.stack_path }}
-
-#   - stage: Apply
-#     displayName: "Apply"
-#     dependsOn: Plan
-#     jobs:
-#       - template: ../templates/stage-apply.yml
-#         parameters:
-#           environment: ${{ parameters.environment }}
-#           path: ${{ parameters.stack_path }}
-
-#   - stage: Evidence
-#     displayName: "Evidence"
-#     dependsOn: Apply
-#     jobs:
-#       - template: ../templates/stage-evidence.yml
+# Placeholder Azure Pipeline definition.
+#
+# Planned content for this pipeline:
+# - Trigger per stack or manual run with parameters.
+# - Execute stack-specific validate/plan/apply flow.
+# - Use shared templates to keep behavior consistent.
+# - Inject environment-specific variables securely.
+# - Capture and publish stack-level evidence artifacts.

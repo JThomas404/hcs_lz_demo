@@ -1,17 +1,8 @@
-# trigger: none
-
-# stages:
-#   - stage: Disabled
-#     displayName: "Run-all disabled"
-#     jobs:
-#       - job: explain
-#         displayName: "Explain supported execution model"
-#         pool:
-#           vmImage: "ubuntu-latest"
-#         steps:
-#           - script: |
-#               set -euo pipefail
-#               echo "azure-pipelines-run-all.yml is intentionally disabled."
-#               echo "Use per-stack pipelines with explicit stack_path values instead."
-#               echo "Reference: pipelines/azure-pipelines-per-stack.yml and pipelines/azure-pipelines-stack-wrapper.yml"
-#             displayName: "Run-all disabled by design"
+# Placeholder Azure Pipeline definition.
+#
+# Planned content for this pipeline:
+# - Define controlled trigger behavior for batch execution.
+# - Discover and iterate target stacks safely.
+# - Run validation and planning before any apply actions.
+# - Enforce ordering, approvals, and failure handling.
+# - Publish consolidated run evidence and summaries.

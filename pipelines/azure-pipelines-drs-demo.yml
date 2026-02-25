@@ -1,0 +1,8 @@
+# Placeholder Azure Pipeline definition.
+#
+# Planned content for this pipeline:
+# - Trigger DRS demo workflow in controlled environments.
+# - Validate DRS prerequisites and input parameters.
+# - Execute DRS plan/apply stages with approval gates.
+# - Run post-deployment checks and evidence collection.
+# - Publish demo outcomes and rollback guidance artifacts.
